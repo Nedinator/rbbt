@@ -3,13 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <title>URL Stats</title>
-        <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
+        />
     </head>
     <body>
         <main>
-            <section style="float: right">
-                {{template "partials/search" .}}
-            </section>
+            <div>{{template "partials/header"}}</div>
             <section>
                 <h2>Stats</h2>
                 <p><strong>Long URL:</strong> {{.LongUrl}}</p>
