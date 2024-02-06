@@ -23,6 +23,7 @@
                     <strong>Short URL:</strong>
                     <a href="{{.ShortUrl}}" target="_blank">{{.ShortUrl}}</a>
                 </p>
+                <p><strong>Short ID:</strong> {{.ShortId}}</p>
                 <p><strong>Clicks:</strong> {{.Clicks}}</p>
                 <p><strong>Created At:</strong> {{.CreatedAt}}</p>
             </section>
@@ -33,6 +34,15 @@
                     >♻️Refresh this page</a
                 >
             </div>
+            <br />
+            <p>
+                <i
+                    >Disclaimer: Clicks is incremented on each click, and does
+                    not store any of your data. This means it can't tell when
+                    someone is spam clicking, so don't always trust a link with
+                    a lot of clicks.</i
+                >
+            </p>
         </main>
     </body>
 </html>
