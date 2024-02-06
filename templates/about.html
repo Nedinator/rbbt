@@ -8,6 +8,9 @@
             href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
         />
         <style>
+            .container {
+                margin: 2rem;
+            }
             .github-badge {
                 display: flex;
                 align-items: center;
@@ -20,35 +23,36 @@
             }
         </style>
     </head>
-
     <body>
         <div>{{template "partials/header"}}</div>
-        <header>
-            <h1>About Ribbit</h1>
-        </header>
-        <main>
-            <p>
-                Ribbit is a simple yet powerful URL shortener designed to make
-                sharing long URLs more convenient and trackable. Built with
-                modern web technologies, Ribbit offers fast and reliable service
-                for both personal and professional use.
-            </p>
-            <p>
-                Whether you're looking to clean up links for social media
-                sharing or need a way to track how your links perform, Ribbit
-                has you covered. Our easy-to-use platform ensures that your
-                links are both manageable and monitorable.
-            </p>
+        <div class="container">
+            <header>
+                <h1>About Ribbit</h1>
+            </header>
+            <main>
+                <p>
+                    Ribbit is a simple yet powerful URL shortener designed to
+                    make sharing long URLs more convenient and trackable. Built
+                    with modern web technologies, Ribbit offers fast and
+                    reliable service for both personal and professional use.
+                </p>
+                <p>
+                    Whether you're looking to clean up links for social media
+                    sharing or need a way to track how your links perform,
+                    Ribbit has you covered. Our easy-to-use platform ensures
+                    that your links are both manageable and monitorable.
+                </p>
 
-            <div class="github-badge">
-                <img
-                    src="https://icons.getbootstrap.com/assets/icons/github.svg"
-                    alt="GitHub Logo"
-                />
-                <a href="https://github.com/nedinator/rbbt" target="_blank"
-                    >Check out the project on GitHub</a
-                >
-            </div>
-        </main>
+                <div class="github-badge">
+                    <img
+                        src="https://icons.getbootstrap.com/assets/icons/github.svg"
+                        alt="GitHub Logo"
+                    />
+                    <a href="https://github.com/nedinator/rbbt" target="_blank"
+                        >Check out the project on GitHub</a
+                    >
+                </div>
+            </main>
+        </div>
     </body>
 </html>

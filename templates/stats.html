@@ -3,14 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <title>🐸Ribbit - Statistics</title>
+        <style>
+            .container {
+                margin: 2rem;
+            }
+        </style>
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
         />
     </head>
     <body>
-        <main>
-            <div>{{template "partials/header"}}</div>
+        {{template "partials/header"}}
+        <main class="container">
             <section>
                 <h2>Stats</h2>
                 <p><strong>Long URL:</strong> {{.LongUrl}}</p>
