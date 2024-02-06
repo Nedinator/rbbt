@@ -19,7 +19,8 @@
     - [x] General Styling - Chose to go with a minimal design instead and used Water.css.
         - [ ] There's still some formatting I need to fix.
     - [ ] Blog Page
-    - [ ] About Page
+    - [x] About Page
+        - [ ] Some general styling will fix this page up.
 
 
 

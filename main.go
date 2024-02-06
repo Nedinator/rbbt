@@ -26,6 +26,9 @@ func main() {
 	app.Get("/about", func(c *fiber.Ctx) error {
 		return c.Render("about", fiber.Map{})
 	})
+	app.Get("/blog", func(c *fiber.Ctx) error {
+		return c.Render("blog", fiber.Map{})
+	})
 	app.Get("/new-url", func(c *fiber.Ctx) error {
 		return c.Render("new-url", fiber.Map{})
 	})
