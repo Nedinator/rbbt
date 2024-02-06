@@ -19,9 +19,9 @@ func GetUrlStats(c *fiber.Ctx) error {
 
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return c.Status(404).SendString("Not Found")
+			return c.Status(404).Render("404", nil)
 		}
-		return c.Status(500).SendString("Internal Server Error")
+		return c.Status(500).Render("404", nil)
 	}
 
 	return c.Render("stats", res)
@@ -74,9 +74,9 @@ func SearchForStats(c *fiber.Ctx) error {
 	err := data.Db.Collection("url").FindOne(c.Context(), filter).Decode(&res)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return c.Status(404).SendString("Not Found")
+			return c.Status(404).Render("404", nil)
 		}
-		return c.Status(500).SendString("Internal Server Error")
+		return c.Status(500).Render("404", nil) // Todo: change to 500 page
 	}
 
 	return c.Render("stats", res)

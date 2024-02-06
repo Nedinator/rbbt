@@ -30,5 +30,9 @@ func main() {
 
 	app.Get("/:id", handlers.Redirect)
 
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.Render("home", fiber.Map{})
+	})
+
 	app.Listen(":3000")
 }

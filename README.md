@@ -16,6 +16,8 @@
         - [ ] Needs some serious styling
     - [ ] 404 Page
     - [ ] General Styling
+        - [ ] I want to switch to TailwindCSS at some point, but it's been a while since I've used it. https://tailwindcss.com/docs/installation/play-cdn
+
 
 ## Setup
 

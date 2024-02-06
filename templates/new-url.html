@@ -1,23 +1,30 @@
-<!-- templates/new-url.html -->
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <title>Submit a Link</title>
         <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
-        <!-- Using MVP.css for styling -->
+        <style>
+            body {
+                position: relative;
+            }
+            .search-container {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 20px;
+            }
+        </style>
     </head>
     <body>
+        <div class="search-container">{{template "partials/search" .}}</div>
         <main>
-            <h1>Submit a New Link</h1>
-            <form action="api/new-url" method="POST">
+            <h1 style="padding-left: 20px">Submit a New Link</h1>
+            <form action="api/new-url" method="POST" style="padding-left: 20px">
                 <label for="longUrl">Long URL:</label>
                 <input type="url" id="longUrl" name="longurl" required />
                 <button type="submit">Shorten</button>
             </form>
-            <section style="float: right">
-                {{template "partials/search" .}}
-            </section>
         </main>
     </body>
 </html>
