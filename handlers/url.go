@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"net/url"
 	"time"
 
 	"github.com/Nedinator/ribbit/data"
@@ -32,13 +31,10 @@ func CreateURL(c *fiber.Ctx) error {
 
 	longurl := c.FormValue("longurl")
 	newurl.LongUrl = longurl
-	if !isValidURL(newurl.LongUrl) {
-		return c.Status(400).SendString("Invalid URL")
-	}
 
 	shortid, err := gonanoid.New(6)
 	if err != nil {
-		return c.Status(500).SendString("Internal Server Error")
+		return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
 	}
 	newurl.ShortId = shortid
 	newurl.ShortUrl = "http://127.0.0.1:3000/" + shortid
@@ -58,9 +54,9 @@ func Redirect(c *fiber.Ctx) error {
 
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return c.Status(404).SendString("Not Found")
+			return c.Status(404).Render("404", nil)
 		}
-		return c.Status(500).SendString("Internal Server Error")
+		return c.Status(500).Render("404", nil)
 	}
 
 	c.Redirect(res.LongUrl)
@@ -80,9 +76,4 @@ func SearchForStats(c *fiber.Ctx) error {
 	}
 
 	return c.Render("stats", res)
-}
-
-func isValidURL(u string) bool {
-	_, err := url.ParseRequestURI(u)
-	return err == nil
 }
