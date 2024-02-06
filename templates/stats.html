@@ -7,6 +7,9 @@
     </head>
     <body>
         <main>
+            <section style="float: right">
+                {{template "partials/search" .}}
+            </section>
             <section>
                 <h2>Stats</h2>
                 <p><strong>Long URL:</strong> {{.LongUrl}}</p>

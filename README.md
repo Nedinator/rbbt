@@ -1,5 +1,5 @@
 # 🐸 Rbbt
-*A simple URL shortener implemented in Go using Fiber and MongoDB and a frontend with HTMX.*
+*A simple URL shortener implemented in Go using Fiber and MongoDB and a frontend with HTML templates.*
 
 ## To-do list
 
@@ -12,6 +12,8 @@
     - [ ] Home Page
     - [x] Stats Page
     - [x] Submit URL Page
+    - [x] Search Stuff
+        - [ ] Needs some serious styling
     - [ ] 404 Page
     - [ ] General Styling
 

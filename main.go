@@ -26,6 +26,7 @@ func main() {
 	app.Get("/new-url", func(c *fiber.Ctx) error {
 		return c.Render("new-url", fiber.Map{})
 	})
+	app.Get("/search", handlers.SearchForStats)
 
 	app.Get("/:id", handlers.Redirect)
 

@@ -67,6 +67,21 @@ func Redirect(c *fiber.Ctx) error {
 	return nil
 }
 
+func SearchForStats(c *fiber.Ctx) error {
+	var res data.Url
+	searchID := c.FormValue("searchid")
+	filter := bson.M{"shortid": searchID}
+	err := data.Db.Collection("url").FindOne(c.Context(), filter).Decode(&res)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return c.Status(404).SendString("Not Found")
+		}
+		return c.Status(500).SendString("Internal Server Error")
+	}
+
+	return c.Render("stats", res)
+}
+
 func isValidURL(u string) bool {
 	_, err := url.ParseRequestURI(u)
 	return err == nil
