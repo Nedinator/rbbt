@@ -14,6 +14,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	defer data.Disconnect(client)
 	engine := html.New("./templates", ".html")
 	app := fiber.New(fiber.Config{
@@ -22,7 +23,9 @@ func main() {
 
 	app.Post("/api/new-url", handlers.CreateURL)
 	app.Get("/stats/:id", handlers.GetUrlStats)
-
+	app.Get("/about", func(c *fiber.Ctx) error {
+		return c.Render("about", fiber.Map{})
+	})
 	app.Get("/new-url", func(c *fiber.Ctx) error {
 		return c.Render("new-url", fiber.Map{})
 	})

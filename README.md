@@ -5,7 +5,7 @@
 
 - [x] Routes post request at `/new-url`
     - [x] Check if a short URL already exists before creating a new one.
-- [x] Routes get request at `/:url`
+- [x] All setup (for now)
 - [x] Actually generate a random but short link to use instead of supplying one
 - [x] Create a handler file to manage routes
 - [ ] HTML Template for the frontend
