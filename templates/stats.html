@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>URL Stats</title>
+        <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+    </head>
+    <body>
+        <main>
+            <section>
+                <h2>Stats</h2>
+                <p><strong>Long URL:</strong> {{.LongUrl}}</p>
+                <p>
+                    <strong>Short URL:</strong>
+                    <a href="{{.ShortUrl}}" target="_blank">{{.ShortUrl}}</a>
+                </p>
+                <p><strong>Clicks:</strong> {{.Clicks}}</p>
+                <p><strong>Created At:</strong> {{.CreatedAt}}</p>
+            </section>
+            <div>
+                <a
+                    href="http://127.0.0.1:3000/stats/{{.ShortId}}"
+                    target="_self"
+                    >♻️Refresh this page</a
+                >
+            </div>
+        </main>
+    </body>
+</html>

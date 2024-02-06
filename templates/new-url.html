@@ -1,0 +1,22 @@
+<!-- templates/new-url.html -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Submit a Link</title>
+        <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+        <!-- Using MVP.css for styling -->
+    </head>
+    <body>
+        {{template "partials/header.html" .}}
+
+        <main>
+            <h1>Submit a New Link</h1>
+            <form action="api/new-url" method="POST">
+                <label for="longUrl">Long URL:</label>
+                <input type="url" id="longUrl" name="longurl" required />
+                <button type="submit">Shorten</button>
+            </form>
+        </main>
+    </body>
+</html>
