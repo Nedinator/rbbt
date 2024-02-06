@@ -54,10 +54,10 @@
 
 **POST**
 1. Set method to POST
-2. URL - ` http://127.0.0.1:3000/api/v1/new-url`
+2. URL - ` http://127.0.0.1:3000/api/new-url`
 3. `{"long_url": "https://example.com"}`
 
 **GET**
 
 1. Set method to GET
-2. Set URL to `http://127.0.0.1:3000/api/v1/:id` with ':id' being the short_url of a corresponding document in your MongoDB
+2. Set URL to `http://127.0.0.1:3000/:id` with ':id' being the shortId of a corresponding document in your MongoDB
