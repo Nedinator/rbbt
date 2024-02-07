@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/Nedinator/ribbit/blogs"
 	"github.com/Nedinator/ribbit/data"
 	"github.com/Nedinator/ribbit/handlers"
 	"github.com/gofiber/fiber/v2"
@@ -27,8 +28,15 @@ func main() {
 		return c.Render("about", fiber.Map{})
 	})
 	app.Get("/blog", func(c *fiber.Ctx) error {
-		return c.Render("blog", fiber.Map{})
+		posts, err := blogs.GetBlogPosts()
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+		}
+		return c.Render("blog", fiber.Map{
+			"Posts": posts,
+		})
 	})
+
 	app.Get("/new-url", func(c *fiber.Ctx) error {
 		return c.Render("new-url", fiber.Map{})
 	})

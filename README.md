@@ -19,7 +19,7 @@
     - [x] General Styling - Chose to go with a minimal design instead and used Water.css.
         - [x] There's still some formatting I need to fix.
     - [x] Blog Page
-        - [ ] Placeholder for now, going to add some blog posts about the project and other stuff once it's finished.
+        - [x] Placeholder for now, going to add some blog posts about the project and other stuff once it's finished.
     - [x] About Page
         - [x] Some general styling will fix this page up.
 

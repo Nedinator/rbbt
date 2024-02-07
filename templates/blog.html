@@ -7,11 +7,22 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
         />
+        <style>
+            .container {
+                margin: 2rem;
+            }
+        </style>
     </head>
     <body>
-        <div>{{template "partials/header"}}</div>
-        <main>
-            <h1 style="padding-left: 20px">Placeholder :)</h1>
-        </main>
+        {{template "partials/header"}}
+        <div class="container">
+            <main>
+                <div>
+                    {{range .Posts}}
+                    <div>{{.}}</div>
+                    {{end}}
+                </div>
+            </main>
+        </div>
     </body>
 </html>
