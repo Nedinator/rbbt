@@ -28,6 +28,13 @@
     - [ ] I have enough CSS that I need to move everything to a styles.css.
 - [ ] First blog post about my experience with Go and Fiber for this project.
     - [ ] I need to figure out a better way to sort the blog posts. Oldest will be at the top right now.
+- [ ] Add search to homepage
+- [ ] Long-term goals
+    - [ ] Adding a user system to maintain your own links and create custom ones
+    - [ ] General Security (Limiting requests mainly)
+    - [ ] More in-depth statistics
+        - [ ] This will be limited due to the fact I want to collect as little data as possible.
+    - [ ] Really should just redo the /home... I don't like it.
 
 ## Setup
 
