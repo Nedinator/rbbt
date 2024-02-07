@@ -8,9 +8,9 @@
 - [x] All setup (for now)
 - [x] Actually generate a random but short link to use instead of supplying one
 - [x] Create a handler file to manage routes
-- [ ] HTML Template for the frontend
+- [x] HTML Template for the frontend
     - [x] Home Page
-        - [ ] Placeholder for now, gonna add some screenshots and a brief description of the project once TailwindCSS is implemented
+        - [x] Placeholder for now, gonna add some screenshots and a brief description of the project once TailwindCSS is implemented
     - [x] Stats Page
     - [x] Submit URL Page
     - [x] Search Stuff
@@ -22,8 +22,12 @@
         - [x] Placeholder for now, going to add some blog posts about the project and other stuff once it's finished.
     - [x] About Page
         - [x] Some general styling will fix this page up.
-
-
+- [ ] There's a lot of nitty gritty stuff I need to do
+    - [ ] Homepage formatting
+    - [ ] Everything else is anchored to the left still
+    - [ ] I have enough CSS that I need to move everything to a styles.css.
+- [ ] First blog post about my experience with Go and Fiber for this project.
+    - [ ] I need to figure out a better way to sort the blog posts. Oldest will be at the top right now.
 
 ## Setup
 
