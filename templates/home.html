@@ -2,16 +2,64 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>🐸Ribbit - Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>🐸 Ribbit - Home</title>
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
         />
+        <style>
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .header {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .feature {
+                margin-bottom: 20px;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 40px;
+            }
+        </style>
     </head>
     <body>
-        <div>{{template "partials/header"}}</div>
-        <main>
-            <h1 style="padding-left: 20px">Placeholder :)</h1>
-        </main>
+        <div class="container">
+            <header class="header">
+                <h1>🐸 Ribbit</h1>
+                <p>Welcome to Ribbit, your go-to URL shortener!</p>
+            </header>
+            <section class="features">
+                <div class="feature">
+                    <!-- TODO: Add pictures of the webapp -->
+                    <h2>Shorten Your URL</h2>
+                    <p>
+                        Use our simple URL shortener to make long links more
+                        manageable.
+                    </p>
+                    <a href="/new-url">Shorten URL</a>
+                </div>
+                <div class="feature">
+                    <h2>Read Our Blog</h2>
+                    <p>
+                        Check out our latest articles on technology,
+                        development, and more.
+                    </p>
+                    <a href="/blog">Visit Blog</a>
+                </div>
+                <div class="feature">
+                    <h2>Learn About Us</h2>
+                    <p>Find out more about what we do and why we do it.</p>
+                    <a href="/about">About Us</a>
+                </div>
+            </section>
+            <footer class="footer">
+                <p>&copy; 2024 Ribbit. All rights reserved.</p>
+            </footer>
+        </div>
     </body>
 </html>
