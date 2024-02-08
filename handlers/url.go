@@ -59,8 +59,8 @@ func Redirect(c *fiber.Ctx) error {
 		return c.Status(500).Render("404", nil)
 	}
 
-	c.Redirect(res.LongUrl)
-	return nil
+	return c.Redirect(res.LongUrl)
+
 }
 
 func SearchForStats(c *fiber.Ctx) error {
