@@ -60,7 +60,6 @@ func Redirect(c *fiber.Ctx) error {
 	}
 
 	return c.Redirect(res.LongUrl)
-
 }
 
 func SearchForStats(c *fiber.Ctx) error {
