@@ -30,7 +30,7 @@ func main() {
 	app.Get("/blog", func(c *fiber.Ctx) error {
 		posts, err := blogs.GetBlogPosts()
 		if err != nil {
-			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+			return c.Status(fiber.StatusInternalServerError).Render("blog", fiber.Map{})
 		}
 		return c.Render("blog", fiber.Map{
 			"Posts": posts,
