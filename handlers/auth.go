@@ -1,10 +1,12 @@
 package handlers
 
 import (
-	"fmt"
+	"os"
+	"time"
 
 	"github.com/Nedinator/ribbit/data"
 	"github.com/Nedinator/ribbit/util"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	gonanoid "github.com/matoous/go-nanoid/v2"
 	"go.mongodb.org/mongo-driver/bson"
@@ -17,7 +19,6 @@ func Signup(c *fiber.Ctx) error {
 	if err := c.BodyParser(&user); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
-	fmt.Println(user)
 	if checkUsername(user.Username, c) {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Username already exists"})
 	}
@@ -78,4 +79,14 @@ func checkUsername(username string, c *fiber.Ctx) bool {
 		}
 	}
 	return true
+}
+
+func GenerateJWT(username string) (string, error) {
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
+	claims["username"] = username
+	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+	jwtSecret := os.Getenv("JWT_SECRET")
+	tokenString, err := token.SignedString([]byte(jwtSecret))
+	return tokenString, err
 }
