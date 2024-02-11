@@ -23,6 +23,8 @@ func main() {
 	})
 
 	app.Post("/api/new-url", handlers.CreateURL)
+	app.Post("/signup", handlers.Signup)
+	app.Post("/login", handlers.Login)
 	app.Get("/stats/:id", handlers.GetUrlStats)
 	app.Get("/about", func(c *fiber.Ctx) error {
 		return c.Render("about", fiber.Map{})
