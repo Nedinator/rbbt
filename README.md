@@ -22,6 +22,11 @@
         - [x] Placeholder for now, going to add some blog posts about the project and other stuff once it's finished.
     - [x] About Page
         - [x] Some general styling will fix this page up.
+- [ ] Starting the user auth system
+    - [x] Create bcrypt tools
+    - [x] Create a user struct
+    - [x] Signup/Login Routes
+    - [ ] Some form of session management (Jwt or something)
 - [ ] There's a lot of nitty gritty stuff I need to do
     - [ ] Homepage formatting
     - [ ] Everything else is anchored to the left still, I want to create a overall layout that'll keep everything the same format in general.
