@@ -4,10 +4,9 @@ import (
 	"github.com/Nedinator/ribbit/data"
 	"github.com/Nedinator/ribbit/util"
 	"github.com/gofiber/fiber/v2"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func Signup(c *fiber.Ctx, db *mongo.Collection) error {
+func Signup(c *fiber.Ctx) error {
 	user := new(data.User)
 
 	if err := c.BodyParser(user); err != nil {
@@ -20,7 +19,7 @@ func Signup(c *fiber.Ctx, db *mongo.Collection) error {
 	}
 	user.Password = hashedPassword
 
-	_, err = db.InsertOne(c.Context(), user)
+	_, err = data.Db.Collection("users").InsertOne(c.Context(), user)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot create user"})
 	}
