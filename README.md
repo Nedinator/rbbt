@@ -22,6 +22,7 @@
         - [x] Placeholder for now, going to add some blog posts about the project and other stuff once it's finished.
     - [x] About Page
         - [x] Some general styling will fix this page up.
+- [x] Create routing package
 - [ ] Starting the user auth system
     - [x] Create bcrypt tools
     - [x] Create a user struct
