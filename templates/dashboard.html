@@ -1,0 +1,40 @@
+<!-- dashboard.html -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Dashboard - 🐸Ribbit</title>
+        <link rel="stylesheet" href="/path/to/your/styles.css" />
+    </head>
+    <body>
+        <h1>Dashboard</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Short URL</th>
+                    <th>Original URL</th>
+                    <th>Clicks</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Links}}
+                <tr>
+                    <td>
+                        <a href="/{{.ShortId}}" target="_blank"
+                            >{{.ShortUrl}}</a
+                        >
+                    </td>
+                    <td>{{.LongUrl}}</td>
+                    <td>{{.Clicks}}</td>
+                    <td>{{.CreatedAt.Format "Jan 02, 2006"}}</td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="4">No links found.</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </body>
+</html>

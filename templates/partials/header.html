@@ -57,6 +57,22 @@
                     <li><a href="/about">About</a></li>
                 </ul>
                 <div class="search-bar">{{template "partials/search" .}}</div>
+                {{if .IsLoggedIn}}
+                <div>
+                    <span>Welcome, {{.Username}}</span>
+                    <form
+                        action="/signout"
+                        method="POST"
+                        style="display: inline"
+                    >
+                        <button type="submit">Sign Out</button>
+                    </form>
+                </div>
+                {{else}}
+                <div>
+                    <a href="/login">Login</a>
+                </div>
+                {{end}}
             </nav>
         </header>
     </body>

@@ -10,6 +10,7 @@ type Url struct {
 	LongUrl   string    `json:"longurl"`
 	Clicks    int       `json:"clicks"`
 	CreatedAt time.Time `json:"createdat"`
+	Owner     string    `json:"owner"`
 }
 
 type User struct {

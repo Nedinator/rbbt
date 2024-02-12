@@ -65,9 +65,25 @@ func Login(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid credentials"})
 	}
 
-	// TODO: Generate JWT
+	token, err := GenerateJWT(user.Username)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot generate token"})
+	}
 
-	return c.JSON("user logged in")
+	c.Cookie(&fiber.Cookie{
+		Name:     "rbbt_token",
+		Value:    token,
+		Expires:  time.Now().Add(24 * time.Hour * 30),
+		HTTPOnly: true,
+	})
+
+	return c.Redirect("/dashboard")
+
+}
+
+func Logout(c *fiber.Ctx) error {
+	c.ClearCookie("rbbt_token")
+	return c.JSON(fiber.Map{"message": "User logged out successfully"})
 }
 
 func checkUsername(username string, c *fiber.Ctx) bool {
@@ -85,7 +101,7 @@ func GenerateJWT(username string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 	claims["username"] = username
-	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+	claims["exp"] = time.Now().Add(time.Hour * 24 * 30).Unix()
 	jwtSecret := os.Getenv("JWT_SECRET")
 	tokenString, err := token.SignedString([]byte(jwtSecret))
 	return tokenString, err
