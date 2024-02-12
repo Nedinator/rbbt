@@ -27,7 +27,8 @@
     - [x] Create bcrypt tools
     - [x] Create a user struct
     - [x] Signup/Login Routes
-    - [ ] Some form of session management (Jwt or something)
+    - [ ] JWT
+        - [ ] Middleware setup
 - [ ] There's a lot of nitty gritty stuff I need to do
     - [ ] Homepage formatting
     - [ ] Everything else is anchored to the left still, I want to create a overall layout that'll keep everything the same format in general.
@@ -73,11 +74,22 @@
 > This is currently not working, I plan on adding a api module to the project to handle this. Originally, that's all this was going to be.
 
 **POST**
-1. Set method to POST
-2. URL - ` http://127.0.0.1:3000/api/new-url`
-3. `{"long_url": "https://example.com"}`
+- Set method to POST
+- URL - ` http://127.0.0.1:3000/api/new-url`
+- `{"long_url": "https://example.com"}`
 
 **GET**
 
-1. Set method to GET
-2. Set URL to `http://127.0.0.1:3000/:id` with ':id' being the shortId of a corresponding document in your MongoDB
+- Set method to GET
+- Set URL to `http://127.0.0.1:3000/:id` with ':id' being the shortId of a corresponding document in your MongoDB
+
+6. **Setup ENV variables**
+
+On MacOS or Linux, you can set the environment variable like this:
+```bash
+export JWT_SECRET="your_jwt_secret"
+```
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
+```
