@@ -10,6 +10,7 @@
     </head>
     <body>
         <div class="container">
+            {{template "partials/header" .}}
             <h1>Login</h1>
             <form action="/auth/login" method="POST">
                 <label for="username">Username</label>

@@ -51,17 +51,17 @@
         <header>
             <nav class="header-nav">
                 <ul class="nav-links">
-                    <li><a href="/">🐸 Ribbit</a></li>
+                    <li><a href="/">🐸</a></li>
                     <li><a href="/new-url">Shorten</a></li>
                     <li><a href="/blog">Blog</a></li>
                     <li><a href="/about">About</a></li>
                 </ul>
-                <div class="search-bar">{{template "partials/search" .}}</div>
+                <div class="search-bar">{{template "partials/search"}}</div>
                 {{if .IsLoggedIn}}
                 <div>
                     <span>Welcome, {{.Username}}</span>
                     <form
-                        action="/signout"
+                        action="/auth/logout"
                         method="POST"
                         style="display: inline"
                     >
