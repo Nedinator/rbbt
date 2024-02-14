@@ -23,26 +23,10 @@
     - [x] About Page
         - [x] Some general styling will fix this page up.
 - [x] Create routing package
-- [ ] Starting the user auth system
-    - [x] Create bcrypt tools
-    - [x] Create a user struct
-    - [x] Signup/Login Routes
-    - [ ] JWT
-        - [ ] Middleware setup
-- [ ] There's a lot of nitty gritty stuff I need to do
-    - [ ] Homepage formatting
-    - [ ] Everything else is anchored to the left still, I want to create a overall layout that'll keep everything the same format in general.
-    - [ ] I have enough CSS that I need to move everything to a styles.css.
-- [ ] First blog post about my experience with Go and Fiber for this project.
-    - [ ] I need to figure out a better way to sort the blog posts. Oldest will be at the top right now.
-- [x] Add search to homepage
-    - [ ] I need to add a search bar to the homepage to search for links.
-    - [ ] Really should just redo the /home... I don't like it.
-- [ ] Long-term goals
-    - [ ] Adding a user system to maintain your own links and create custom ones
-    - [ ] General Security (Limiting requests mainly)
-    - [ ] More in-depth statistics
-        - [ ] This will be limited due to the fact I want to collect as little data as possible.
+- [ ] V3 rewrite lol
+    - [ ] I'm removing blogs
+    - [ ] Switching to Auth0.
+    - [ ] Switching to Tailwindcss (i'll use the cdn for now, but create my own imports laters)
 
 
 ## Setup

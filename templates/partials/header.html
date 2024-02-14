@@ -3,76 +3,59 @@
     <head>
         <meta charset="UTF-8" />
         <title>🐸 Ribbit</title>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
-        />
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                font-family: Arial, sans-serif;
-            }
-            .header-nav {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-            }
-            .nav-links {
-                list-style: none;
-                display: flex;
-                gap: 1rem;
-                margin: 0;
-                padding: 0;
-                font-size: 24px;
-            }
-            .nav-links a {
-                text-decoration: none;
-                color: inherit;
-            }
-            .nav-links a:hover {
-                text-decoration: underline;
-            }
-            .search-bar {
-                display: flex;
-            }
-            .search-bar input {
-                flex-grow: 1;
-                margin-right: 8px;
-            }
-            .search-bar button {
-                cursor: pointer;
-                justify-items: end;
-            }
-        </style>
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
-        <header>
-            <nav class="header-nav">
-                <ul class="nav-links">
-                    <li><a href="/">🐸</a></li>
-                    <li><a href="/new-url">Shorten</a></li>
-                    <li><a href="/blog">Blog</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-                <div class="search-bar">{{template "partials/search"}}</div>
-                {{if .IsLoggedIn}}
-                <div>
-                    <span>Welcome, {{.Username}}</span>
-                    <form
-                        action="/auth/logout"
-                        method="POST"
-                        style="display: inline"
-                    >
-                        <button type="submit">Sign Out</button>
-                    </form>
+    <body class="bg-gray-800 text-gray-100">
+        <header class="bg-gray-900">
+            <nav
+                class="mx-auto flex max-w-6xl items-center justify-between px-4 py-6"
+            >
+                <a href="/" class="text-xl font-bold text-indigo-400"
+                    >🐸 Ribbit</a
+                >
+                <div class="flex items-center space-x-4">
+                    <ul class="flex space-x-4">
+                        <li>
+                            <a href="/new-url" class="hover:text-indigo-300"
+                                >Shorten</a
+                            >
+                        </li>
+                        <li>
+                            <a href="/blog" class="hover:text-indigo-300"
+                                >Blog</a
+                            >
+                        </li>
+                        <li>
+                            <a href="/about" class="hover:text-indigo-300"
+                                >About</a
+                            >
+                        </li>
+                    </ul>
+                    <div>
+                        {{if .IsLoggedIn}}
+                        <span class="mr-4">Welcome, {{.Username}}</span>
+                        <form
+                            action="/auth/logout"
+                            method="POST"
+                            class="inline"
+                        >
+                            <button
+                                type="submit"
+                                class="rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700"
+                            >
+                                Sign Out
+                            </button>
+                        </form>
+                        {{else}}
+                        <a
+                            href="/login"
+                            class="text-indigo-400 hover:text-indigo-300"
+                            >Login</a
+                        >
+                        {{end}}
+                    </div>
+                    {{template "partials/search" .}}
                 </div>
-                {{else}}
-                <div>
-                    <a href="/login">Login</a>
-                </div>
-                {{end}}
             </nav>
         </header>
     </body>

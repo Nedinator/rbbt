@@ -2,21 +2,44 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>🐸Ribbit - Submit</title>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>🐸 Ribbit - Submit</title>
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
+    <body class="bg-gray-800 text-gray-100">
         <div>{{template "partials/header" .}}</div>
-        <main>
-            <h1 style="padding-left: 20px">Submit a New Link</h1>
-            <form action="api/new-url" method="POST" style="padding-left: 20px">
-                <label for="longUrl"><strong>Long URL:</strong></label>
-                <input type="url" id="longUrl" name="longurl" required />
-                <button type="submit">Shorten</button>
-            </form>
+        <main class="pt-10">
+            <div class="flex flex-col items-center">
+                <h1 class="mb-4 text-center text-2xl font-bold">
+                    Submit a New Link
+                </h1>
+                <form
+                    action="api/new-url"
+                    method="POST"
+                    class="w-full max-w-lg px-4"
+                >
+                    <div class="mb-4">
+                        <label
+                            for="longUrl"
+                            class="block text-sm font-medium text-gray-200"
+                            ><strong>Long URL:</strong></label
+                        >
+                        <input
+                            type="url"
+                            id="longUrl"
+                            name="longurl"
+                            required
+                            class="mt-1 w-full rounded-md border-transparent bg-gray-700 p-2 focus:border-indigo-500 focus:bg-gray-600 focus:ring-0"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        class="rounded-md bg-indigo-600 px-4 py-2 font-bold text-white hover:bg-indigo-700"
+                    >
+                        Shorten
+                    </button>
+                </form>
+            </div>
         </main>
     </body>
 </html>

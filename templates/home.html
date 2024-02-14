@@ -1,65 +1,57 @@
-<!-- home.html -->
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>🐸 Ribbit - Home</title>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
-        />
-        <style>
-            .container {
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 20px;
-            }
-            .header {
-                text-align: center;
-                margin-bottom: 40px;
-            }
-            .feature {
-                margin-bottom: 20px;
-            }
-            .footer {
-                text-align: center;
-                margin-top: 40px;
-            }
-        </style>
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
-        <div class="container">
-            {{template "partials/header" .}}
-            <header class="header">
-                <h1>🐸 Ribbit</h1>
-                <p>Welcome to Ribbit, your go-to URL shortener!</p>
+    <body class="bg-gray-800 text-white">
+        <div class="container mx-auto px-4 py-8">
+            <header class="mb-12 text-center">
+                <h1 class="mb-4 text-4xl font-bold">🐸 Ribbit</h1>
+                <p class="text-xl">
+                    Welcome to Ribbit, your go-to URL shortener!
+                </p>
             </header>
-            <section class="features">
-                <div class="feature">
-                    <!-- TODO: Add pictures of the webapp -->
-                    <h2>Shorten Your URL</h2>
-                    <p>
+            <section class="grid gap-8 md:grid-cols-3">
+                <div class="rounded-lg bg-gray-900 p-6 shadow-lg">
+                    <h2 class="mb-2 text-xl font-bold">Shorten Your URL</h2>
+                    <p class="mb-4">
                         Use our simple URL shortener to make long links more
                         manageable.
                     </p>
-                    <a href="/new-url">Shorten URL</a>
+                    <a
+                        href="/new-url"
+                        class="text-indigo-400 hover:text-indigo-300"
+                        >Shorten URL</a
+                    >
                 </div>
-                <div class="feature">
-                    <h2>Read Our Blog</h2>
-                    <p>
+                <div class="rounded-lg bg-gray-900 p-6 shadow-lg">
+                    <h2 class="mb-2 text-xl font-bold">Read Our Blog</h2>
+                    <p class="mb-4">
                         Check out our latest articles on technology,
                         development, and more.
                     </p>
-                    <a href="/blog">Visit Blog</a>
+                    <a
+                        href="/blog"
+                        class="text-indigo-400 hover:text-indigo-300"
+                        >Visit Blog</a
+                    >
                 </div>
-                <div class="feature">
-                    <h2>Learn About Us</h2>
-                    <p>Find out more about what we do and why we do it.</p>
-                    <a href="/about">About Us</a>
+                <div class="rounded-lg bg-gray-900 p-6 shadow-lg">
+                    <h2 class="mb-2 text-xl font-bold">Learn About Us</h2>
+                    <p class="mb-4">
+                        Find out more about what we do and why we do it.
+                    </p>
+                    <a
+                        href="/about"
+                        class="text-indigo-400 hover:text-indigo-300"
+                        >About Us</a
+                    >
                 </div>
             </section>
-            <footer class="footer">
+            <footer class="mt-12 text-center">
                 <p>&copy; 2024 Ribbit. All rights reserved.</p>
             </footer>
         </div>

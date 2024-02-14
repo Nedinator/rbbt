@@ -1,41 +1,52 @@
-<!-- dashboard.html -->
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
     <head>
         <meta charset="UTF-8" />
         <title>Dashboard - 🐸Ribbit</title>
-        <link rel="stylesheet" href="/path/to/your/styles.css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
-    <body>
+    <body class="dark:bg-gray-800 dark:text-gray-200">
         {{template "partials/header" .}}
-        <h1>Dashboard</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Short URL</th>
-                    <th>Original URL</th>
-                    <th>Clicks</th>
-                    <th>Created At</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{range .Links}}
-                <tr>
-                    <td>
-                        <a href="/{{.ShortId}}" target="_blank"
-                            >{{.ShortUrl}}</a
-                        >
-                    </td>
-                    <td>{{.LongUrl}}</td>
-                    <td>{{.Clicks}}</td>
-                    <td>{{.CreatedAt.Format "Jan 02, 2006"}}</td>
-                </tr>
-                {{else}}
-                <tr>
-                    <td colspan="4">No links found.</td>
-                </tr>
-                {{end}}
-            </tbody>
-        </table>
+        <div class="flex min-h-screen flex-col items-center justify-center">
+            <h1 class="text-xl font-semibold">Dashboard</h1>
+            <div class="mt-4 w-full max-w-4xl">
+                <table class="w-full table-auto">
+                    <thead class="text-left">
+                        <tr>
+                            <th class="p-2 dark:text-gray-100">Short URL</th>
+                            <th class="p-2 dark:text-gray-100">Original URL</th>
+                            <th class="p-2 dark:text-gray-100">Clicks</th>
+                            <th class="p-2 dark:text-gray-100">Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{range .Links}}
+                        <tr class="border-t dark:border-gray-700">
+                            <td class="p-2">
+                                <a
+                                    href="/{{.ShortId}}"
+                                    target="_blank"
+                                    class="text-indigo-400 hover:text-indigo-600"
+                                    >{{.ShortUrl}}</a
+                                >
+                            </td>
+                            <td class="p-2">{{.LongUrl}}</td>
+                            <td class="p-2">{{.Clicks}}</td>
+                            <td class="p-2">
+                                {{.CreatedAt.Format "Jan 02, 2006"}}
+                            </td>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <td colspan="4" class="p-2 text-center">
+                                No links found.
+                            </td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </body>
 </html>

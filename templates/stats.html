@@ -2,46 +2,42 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>🐸Ribbit - Statistics</title>
-        <style>
-            .container {
-                margin: 2rem;
-            }
-        </style>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>🐸 Ribbit - Statistics</title>
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
+    <body class="bg-gray-800 text-gray-100">
         {{template "partials/header" .}}
-        <main class="container">
+        <main class="mx-auto max-w-4xl p-4">
             <section>
-                <h2>Stats</h2>
+                <h2 class="mb-4 text-xl font-bold">Stats</h2>
                 <p><strong>Long URL:</strong> {{.LongUrl}}</p>
                 <p>
                     <strong>Short URL:</strong>
-                    <a href="{{.ShortUrl}}" target="_blank">{{.ShortUrl}}</a>
+                    <a
+                        href="{{.ShortUrl}}"
+                        target="_blank"
+                        class="text-blue-400 hover:text-blue-600"
+                        >{{.ShortUrl}}</a
+                    >
                 </p>
                 <p><strong>Short ID:</strong> {{.ShortId}}</p>
                 <p><strong>Clicks:</strong> {{.Clicks}}</p>
                 <p><strong>Created At:</strong> {{.CreatedAt}}</p>
             </section>
-            <div>
+            <div class="mt-4">
                 <a
                     href="http://127.0.0.1:3000/stats/{{.ShortId}}"
                     target="_self"
-                    >♻️Refresh this page</a
+                    class="text-blue-400 hover:text-blue-600"
+                    >♻️ Refresh this page</a
                 >
             </div>
-            <br />
-            <p>
-                <i
-                    >Disclaimer: Clicks is incremented on each click, and does
-                    not store any of your data. This means it can't tell when
-                    someone is spam clicking, so don't always trust a link with
-                    a lot of clicks.</i
-                >
+            <p class="mt-4 italic">
+                Disclaimer: Clicks is incremented on each click, and does not
+                store any of your data. This means it can't tell when someone is
+                spam clicking, so don't always trust a link with a lot of
+                clicks.
             </p>
         </main>
     </body>

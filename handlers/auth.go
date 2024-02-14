@@ -62,7 +62,7 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	if !util.CheckPasswordHash(user.Password, dbUser.Password) {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid credentials"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials"})
 	}
 
 	token, err := GenerateJWT(dbUser.ID, dbUser.Username)
@@ -79,12 +79,16 @@ func Login(c *fiber.Ctx) error {
 		Secure:   true,
 	})
 
-	return c.Redirect("/dashboard")
+	return c.JSON(fiber.Map{"message": "Login successful", "success": true})
 
 }
 
 func Logout(c *fiber.Ctx) error {
 	c.ClearCookie("rbbt_token")
+	c.Locals("id", nil)
+	c.Locals("username", nil)
+	c.Locals("IsLoggedIn", false)
+	time.Sleep(1 * time.Second)
 	return c.Redirect("/")
 }
 
