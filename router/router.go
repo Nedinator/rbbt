@@ -2,10 +2,8 @@ package router
 
 import (
 	"github.com/Nedinator/ribbit/blogs"
-	// "github.com/Nedinator/ribbit/dashboard"
 	"github.com/Nedinator/ribbit/handlers"
 	"github.com/Nedinator/ribbit/middleware"
-
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -21,6 +19,9 @@ func SetupRoutes(app *fiber.App) {
 	app.Get("/stats/:id", handlers.GetUrlStats)
 	app.Get("/login", func(c *fiber.Ctx) error {
 		return c.Render("login", commonData(c))
+	})
+	app.Get("/signup", func(c *fiber.Ctx) error {
+		return c.Render("signup", commonData(c))
 	})
 	app.Get("/about", func(c *fiber.Ctx) error {
 		return c.Render("about", commonData(c))
