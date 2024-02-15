@@ -38,16 +38,18 @@ func SetupRoutes(app *fiber.App) {
 		return c.Render("blog", data)
 	})
 
+	app.Get("/dashboard", func(c *fiber.Ctx) error {
+		return c.Render("dashboard", commonData(c))
+	})
+
 	app.Get("/new-url", func(c *fiber.Ctx) error {
 		return c.Render("new-url", commonData(c))
 
 	})
+
 	app.Get("/search", handlers.SearchForStats)
 	app.Get("/:id", handlers.Redirect)
 
-	app.Get("/dashboard", func(c *fiber.Ctx) error {
-		return c.Render("dashboard", commonData(c))
-	})
 }
 
 func commonData(c *fiber.Ctx) fiber.Map {
