@@ -10,51 +10,51 @@
             <nav
                 class="mx-auto flex max-w-6xl items-center justify-between px-4 py-6"
             >
-                <a href="/" class="text-xl font-bold text-indigo-400"
-                    >🐸 Ribbit</a
+                <div class="flex-grow">
+                    <a href="/" class="text-xl font-bold text-indigo-400"
+                        >🐸 Ribbit</a
+                    >
+                </div>
+
+                <ul
+                    class="hidden md:flex md:flex-grow md:items-center md:justify-center md:space-x-4"
                 >
+                    <li>
+                        <a href="/new-url" class="hover:text-indigo-300"
+                            >Shorten</a
+                        >
+                    </li>
+                    <li>
+                        <a href="/blog" class="hover:text-indigo-300">Blog</a>
+                    </li>
+                    <li>
+                        <a href="/about" class="hover:text-indigo-300">About</a>
+                    </li>
+                </ul>
+
                 <div class="flex items-center space-x-4">
-                    <ul class="flex space-x-4">
-                        <li>
-                            <a href="/new-url" class="hover:text-indigo-300"
-                                >Shorten</a
-                            >
-                        </li>
-                        <li>
-                            <a href="/blog" class="hover:text-indigo-300"
-                                >Blog</a
-                            >
-                        </li>
-                        <li>
-                            <a href="/about" class="hover:text-indigo-300"
-                                >About</a
-                            >
-                        </li>
-                    </ul>
-                    <div>
-                        {{if .IsLoggedIn}}
-                        <span class="mr-4">Welcome, {{.Username}}</span>
-                        <form
-                            action="/auth/logout"
-                            method="POST"
-                            class="inline"
+                    {{if .IsLoggedIn}}
+                    <span class="mr-4">Welcome, {{.Username}}</span>
+                    <form action="/auth/logout" method="POST" class="inline">
+                        <button
+                            type="submit"
+                            class="rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700"
                         >
-                            <button
-                                type="submit"
-                                class="rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700"
-                            >
-                                Sign Out
-                            </button>
-                        </form>
-                        {{else}}
-                        <a
-                            href="/login"
-                            class="text-indigo-400 hover:text-indigo-300"
-                            >Login</a
-                        >
-                        {{end}}
-                    </div>
-                    {{template "partials/search" .}}
+                            Sign Out
+                        </button>
+                    </form>
+                    {{else}}
+                    <a
+                        href="/login"
+                        class="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-700"
+                        >Login</a
+                    >
+                    <a
+                        href="/signup"
+                        class="rounded bg-green-500 px-3 py-1 text-white hover:bg-green-700"
+                        >Signup</a
+                    >
+                    {{end}} {{template "partials/search" .}}
                 </div>
             </nav>
         </header>

@@ -2,67 +2,68 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Sign Up - 🐸Ribbit</title>
+        <title>Sign Up - 🐸 Ribbit</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
-    <body class="flex min-h-screen items-center justify-center bg-gray-800">
-        <div class="w-full max-w-xs">
-            <form
-                class="mb-4 rounded bg-gray-900 px-8 pb-8 pt-6 shadow-md"
-                action="/auth/signup"
-                method="POST"
-            >
-                <div class="mb-4">
-                    <label
-                        class="mb-2 block text-sm font-bold text-gray-700"
-                        for="username"
-                    >
-                        Username
-                    </label>
-                    <input
-                        class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                        id="username"
-                        name="username"
-                        type="text"
-                        placeholder="Username"
-                    />
-                </div>
-                <div class="mb-4">
-                    <label
-                        class="mb-2 block text-sm font-bold text-gray-700"
-                        for="password"
-                    >
-                        Password
-                    </label>
-                    <input
-                        class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                        id="password"
-                        name="password"
-                        type="password"
-                        placeholder="******************"
-                    />
-                </div>
-                <div class="mb-6">
-                    <button
-                        class="focus:shadow-outline w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
-                        type="submit"
-                    >
-                        Sign Up
-                    </button>
-                </div>
-                <div class="text-center">
-                    <a
-                        class="inline-block align-baseline text-sm font-bold text-blue-500 hover:text-blue-800"
-                        href="/login"
-                    >
-                        Already have an account?
-                    </a>
-                </div>
-            </form>
-            <p class="text-center text-xs text-gray-500">
-                &copy;2024 Ribbit. All rights reserved.
-            </p>
+    <body class="bg-gray-800 text-gray-100">
+        {{template "partials/header" .}}
+
+        <div class="flex min-h-screen flex-col items-center justify-center">
+            <div class="w-full max-w-xs">
+                <form
+                    class="mb-4 rounded bg-gray-900 px-8 pb-8 pt-6 shadow-md"
+                    action="/auth/signup"
+                    method="POST"
+                >
+                    <div class="mb-4">
+                        <label
+                            class="mb-2 block text-sm font-bold text-gray-100"
+                            for="username"
+                            >Username</label
+                        >
+                        <input
+                            class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                            id="username"
+                            name="username"
+                            type="text"
+                            placeholder="Username"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            class="mb-2 block text-sm font-bold text-gray-100"
+                            for="password"
+                            >Password</label
+                        >
+                        <input
+                            class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="******************"
+                        />
+                    </div>
+                    <div class="mb-6">
+                        <button
+                            class="focus:shadow-outline w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
+                            type="submit"
+                        >
+                            Sign Up
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <a
+                            class="inline-block align-baseline text-sm font-bold text-blue-500 hover:text-blue-800"
+                            href="/login"
+                            >Already have an account?</a
+                        >
+                    </div>
+                </form>
+                <p class="text-center text-xs text-gray-500">
+                    &copy;2024 Ribbit. All rights reserved.
+                </p>
+            </div>
         </div>
     </body>
 </html>
