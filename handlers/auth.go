@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -75,8 +76,6 @@ func Login(c *fiber.Ctx) error {
 		Value:    token,
 		Expires:  time.Now().Add(24 * time.Hour * 30),
 		HTTPOnly: true,
-		SameSite: "Strict",
-		Secure:   true,
 	})
 
 	return c.JSON(fiber.Map{"message": "Login successful", "success": true})
@@ -88,7 +87,6 @@ func Logout(c *fiber.Ctx) error {
 	c.Locals("id", nil)
 	c.Locals("username", nil)
 	c.Locals("IsLoggedIn", false)
-	time.Sleep(1 * time.Second)
 	return c.Redirect("/")
 }
 
