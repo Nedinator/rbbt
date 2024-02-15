@@ -82,10 +82,12 @@ func Login(c *fiber.Ctx) error {
 }
 
 func Logout(c *fiber.Ctx) error {
-	c.ClearCookie("rbbt_token")
-	c.Locals("id", nil)
-	c.Locals("username", nil)
-	c.Locals("IsLoggedIn", false)
+	expired := time.Now().Add(-time.Hour * 24)
+	c.Cookie(&fiber.Cookie{
+		Name:    "rbbt_token",
+		Value:   "",
+		Expires: expired,
+	})
 	return c.Redirect("/")
 }
 
