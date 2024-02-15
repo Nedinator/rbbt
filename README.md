@@ -24,9 +24,9 @@
         - [x] Some general styling will fix this page up.
 - [x] Create routing package
 - [ ] V3 rewrite lol
-    - [ ] I'm removing blogs
     - [ ] Switching to Auth0.
-    - [ ] Switching to Tailwindcss (i'll use the cdn for now, but create my own imports laters)
+        - [ ] Actually not till after I figure out my own setup :)
+    - [x] Switching to Tailwindcss (i'll use the cdn for now, but create my own imports laters)
 
 
 ## Setup
