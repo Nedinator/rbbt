@@ -23,7 +23,7 @@ func GetUrlStats(c *fiber.Ctx) error {
 		return c.Status(500).Render("404", nil)
 	}
 	statsData := data.CommonData(c)
-	statsData["res"] = res
+	statsData["url"] = res
 	return c.Render("stats", statsData)
 }
 
@@ -68,14 +68,15 @@ func Redirect(c *fiber.Ctx) error {
 
 func SearchForStats(c *fiber.Ctx) error {
 	var res data.Url
-	searchID := c.FormValue("searchid")
+	searchID := c.Query("searchid")
 	filter := bson.M{"shortid": searchID}
 	err := data.Db.Collection("url").FindOne(c.Context(), filter).Decode(&res)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return c.Status(404).Render("404", nil)
 		}
-		return c.Status(500).Render("404", nil) // Todo: change to 500 page
+
+		return c.Status(500).Render("404", nil)
 	}
 	nextPageData := data.CommonData(c)
 	nextPageData["url"] = res

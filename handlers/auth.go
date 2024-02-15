@@ -62,12 +62,12 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	if !util.CheckPasswordHash(user.Password, dbUser.Password) {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials", "success": false})
 	}
 
 	token, err := GenerateJWT(dbUser.ID, dbUser.Username)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot generate token"})
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot generate token", "success": false})
 	}
 
 	c.Cookie(&fiber.Cookie{

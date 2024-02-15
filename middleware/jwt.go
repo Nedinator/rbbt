@@ -34,7 +34,6 @@ func JwtMiddleware(c *fiber.Ctx) error {
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		fmt.Println("Setting locals")
 		c.Locals("userID", claims["id"])
 		c.Locals("username", claims["username"])
 		return c.Next()
@@ -48,7 +47,6 @@ func AuthStatusMiddleware(c *fiber.Ctx) error {
 	var username string
 	var userID string
 	tokenString := c.Cookies("rbbt_token")
-	fmt.Println("Token from cookie:", tokenString)
 
 	if tokenString != "" {
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -59,7 +57,7 @@ func AuthStatusMiddleware(c *fiber.Ctx) error {
 		})
 
 		if err == nil && token.Valid {
-			fmt.Println("Token is valid")
+
 			isLoggedIn = true
 
 			if claims, ok := token.Claims.(jwt.MapClaims); ok {
