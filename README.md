@@ -26,6 +26,7 @@
 - [ ] V3 rewrite lol
     - [ ] Switching to Auth0.
         - [ ] Actually not till after I figure out my own setup :)
+        - [ ] Auth handling is actual finished now, but needs adjusted now that it's not just an API.
     - [x] Switching to Tailwindcss (i'll use the cdn for now, but create my own imports laters)
 
 

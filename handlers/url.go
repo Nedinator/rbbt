@@ -22,8 +22,9 @@ func GetUrlStats(c *fiber.Ctx) error {
 		}
 		return c.Status(500).Render("404", nil)
 	}
-
-	return c.Render("stats", res)
+	statsData := data.CommonData(c)
+	statsData["res"] = res
+	return c.Render("stats", statsData)
 }
 
 func CreateURL(c *fiber.Ctx) error {
@@ -41,7 +42,10 @@ func CreateURL(c *fiber.Ctx) error {
 	newurl.Clicks = 0
 	newurl.CreatedAt = time.Now()
 	data.Db.Collection("url").InsertOne(c.Context(), newurl)
-	return c.Render("stats", newurl)
+
+	nextPageData := data.CommonData(c)
+	nextPageData["url"] = newurl
+	return c.Render("stats", nextPageData)
 }
 
 func Redirect(c *fiber.Ctx) error {
@@ -73,6 +77,7 @@ func SearchForStats(c *fiber.Ctx) error {
 		}
 		return c.Status(500).Render("404", nil) // Todo: change to 500 page
 	}
-
-	return c.Render("stats", res)
+	nextPageData := data.CommonData(c)
+	nextPageData["url"] = res
+	return c.Render("stats", nextPageData)
 }

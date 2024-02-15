@@ -11,23 +11,23 @@
         <main class="mx-auto max-w-4xl p-4">
             <section>
                 <h2 class="mb-4 text-xl font-bold">Stats</h2>
-                <p><strong>Long URL:</strong> {{.LongUrl}}</p>
+                <p><strong>Long URL:</strong> {{.url.LongUrl}}</p>
                 <p>
                     <strong>Short URL:</strong>
                     <a
-                        href="{{.ShortUrl}}"
+                        href="{{.url.ShortUrl}}"
                         target="_blank"
                         class="text-blue-400 hover:text-blue-600"
-                        >{{.ShortUrl}}</a
+                        >{{.url.ShortUrl}}</a
                     >
                 </p>
-                <p><strong>Short ID:</strong> {{.ShortId}}</p>
-                <p><strong>Clicks:</strong> {{.Clicks}}</p>
-                <p><strong>Created At:</strong> {{.CreatedAt}}</p>
+                <p><strong>Short ID:</strong> {{.url.ShortId}}</p>
+                <p><strong>Clicks:</strong> {{.url.Clicks}}</p>
+                <p><strong>Created At:</strong> {{.url.CreatedAt}}</p>
             </section>
             <div class="mt-4">
                 <a
-                    href="http://127.0.0.1:3000/stats/{{.ShortId}}"
+                    href="http://127.0.0.1:3000/stats/{{.url.ShortId}}"
                     target="_self"
                     class="text-blue-400 hover:text-blue-600"
                     >♻️ Refresh this page</a
