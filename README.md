@@ -77,4 +77,3 @@ export JWT_SECRET="your_jwt_secret"
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
-```
