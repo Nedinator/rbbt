@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"net/url"
 	"time"
 
 	"github.com/Nedinator/ribbit/data"
@@ -61,6 +62,30 @@ func Redirect(c *fiber.Ctx) error {
 			return c.Status(404).Render("404", nil)
 		}
 		return c.Status(500).Render("404", nil)
+	}
+
+	rawURL := c.Get("Referer")
+	parsedURL, err := url.Parse(rawURL)
+	if err != nil {
+		return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
+	}
+	domain := parsedURL.Hostname()
+	if domain != "" {
+		domainExists := false
+		for _, ref := range res.Referer {
+			if ref.Domain == domain {
+				domainFilter := bson.M{"shortid": urlParams, "referer.domain": domain}
+				domainUpdate := bson.M{"$inc": bson.M{"referer.$.clicks": 1}}
+				_, err = data.Db.Collection("url").UpdateOne(c.Context(), domainFilter, domainUpdate)
+				domainExists = true
+				break
+			}
+		}
+
+		if !domainExists {
+			newReferer := bson.M{"$push": bson.M{"referer": data.Referer{Domain: domain, Clicks: 1}}}
+			_, err = data.Db.Collection("url").UpdateOne(c.Context(), filter, newReferer)
+		}
 	}
 
 	return c.Redirect(res.LongUrl)

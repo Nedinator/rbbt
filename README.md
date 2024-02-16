@@ -23,13 +23,18 @@
     - [x] About Page
         - [x] Some general styling will fix this page up.
 - [x] Create routing package
-- [ ] V3 rewrite lol
-    - [ ] Switching to Auth0.
-        - [ ] Actually not till after I figure out my own setup :)
-        - [ ] Auth handling is actual finished now, but needs adjusted now that it's not just an API.
-    - [x] Switching to Tailwindcss (i'll use the cdn for now, but create my own imports laters)
+- [x] Auth handling is actual finished now, but needs adjusted now that it's not just an API.
+- [x] Save referer data for a little bit more insight into clicks
+- [x] Switching to Tailwindcss (i'll use the cdn for now, but create my own imports laters)
 - [x] Removed blogs (i really don't know why I added it)
 - [ ] Custom toasts for errors and success messages
+- [ ] Setup middleware for dashboard and retrieve URLs associated with user
+    - [ ] Create a customer /dashboard/:id route and template to handle referer data.
+- [ ] Decide on a way to display analytics
+    - [ ] I have to decide whether static and server-side with go or dynamic and client-side with JS
+- [ ] Signed up user upgrades
+    - [ ] Custom short URLs
+    - [ ] Custom referer data
 
 
 ## Setup

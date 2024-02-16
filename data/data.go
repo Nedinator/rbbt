@@ -13,6 +13,12 @@ type Url struct {
 	Clicks    int       `json:"clicks"`
 	CreatedAt time.Time `json:"createdat"`
 	Owner     string    `json:"owner"`
+	Referer   []Referer `json:"referer"`
+}
+
+type Referer struct {
+	Domain string `json:"domain" bson:"domain"`
+	Clicks int    `json:"clicks" bson:"clicks"`
 }
 
 type User struct {
