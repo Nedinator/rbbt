@@ -28,6 +28,8 @@
         - [ ] Actually not till after I figure out my own setup :)
         - [ ] Auth handling is actual finished now, but needs adjusted now that it's not just an API.
     - [x] Switching to Tailwindcss (i'll use the cdn for now, but create my own imports laters)
+- [x] Removed blogs (i really don't know why I added it)
+- [ ] Custom toasts for errors and success messages
 
 
 ## Setup

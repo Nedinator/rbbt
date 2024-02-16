@@ -41,7 +41,7 @@ func Signup(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot create user"})
 	}
 
-	return c.JSON("User created")
+	return c.Redirect("/login")
 }
 
 func Login(c *fiber.Ctx) error {

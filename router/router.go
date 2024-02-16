@@ -1,7 +1,6 @@
 package router
 
 import (
-	"github.com/Nedinator/ribbit/blogs"
 	"github.com/Nedinator/ribbit/data"
 	"github.com/Nedinator/ribbit/handlers"
 	"github.com/Nedinator/ribbit/middleware"
@@ -28,19 +27,7 @@ func SetupRoutes(app *fiber.App) {
 		return c.Render("about", data.AuthData(c))
 	})
 
-	app.Get("/blog", func(c *fiber.Ctx) error {
-		posts, err := blogs.GetBlogPosts()
-		if err != nil {
-			return c.Status(fiber.StatusInternalServerError).Render("blog", fiber.Map{})
-		}
-
-		blogData := data.AuthData(c)
-		blogData["posts"] = posts
-
-		return c.Render("blog", blogData)
-	})
-
-	app.Get("/dashboard", func(c *fiber.Ctx) error {
+	app.Get("/dashboard", middleware.JwtMiddleware, func(c *fiber.Ctx) error {
 		return c.Render("dashboard", data.AuthData(c))
 	})
 
