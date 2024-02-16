@@ -75,6 +75,7 @@ func Login(c *fiber.Ctx) error {
 		Value:    token,
 		Expires:  time.Now().Add(24 * time.Hour * 30),
 		HTTPOnly: true,
+		SameSite: "Lax",
 	})
 
 	return c.JSON(fiber.Map{"message": "Login successful", "success": true})
