@@ -16,7 +16,7 @@ import (
 func Signup(c *fiber.Ctx) error {
 	user := new(data.User)
 
-	if err := c.BodyParser(&user); err != nil {
+	if err := c.BodyParser(user); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
 	if checkUsername(user.Username, c) {
@@ -47,7 +47,7 @@ func Signup(c *fiber.Ctx) error {
 func Login(c *fiber.Ctx) error {
 	user := new(data.User)
 	if err := c.BodyParser(user); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "Cannot parse body"})
 	}
 
 	dbUser := new(data.User)
@@ -56,9 +56,9 @@ func Login(c *fiber.Ctx) error {
 	err := data.Db.Collection("users").FindOne(c.Context(), filter).Decode(&dbUser)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid credentials"})
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials"})
 		}
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Internal error"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Internal error"})
 	}
 
 	if !util.CheckPasswordHash(user.Password, dbUser.Password) {

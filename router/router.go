@@ -11,7 +11,7 @@ import (
 func SetupRoutes(app *fiber.App) {
 	app.Use(middleware.AuthStatusMiddleware)
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.Render("home", data.CommonData(c))
+		return c.Render("home", data.AuthData(c))
 	})
 	app.Post("/api/new-url", handlers.CreateURL)
 	app.Post("/auth/signup", handlers.Signup)
@@ -19,13 +19,13 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/auth/logout", handlers.Logout)
 	app.Get("/stats/:id", handlers.GetUrlStats)
 	app.Get("/login", func(c *fiber.Ctx) error {
-		return c.Render("login", data.CommonData(c))
+		return c.Render("login", data.AuthData(c))
 	})
 	app.Get("/signup", func(c *fiber.Ctx) error {
-		return c.Render("signup", data.CommonData(c))
+		return c.Render("signup", data.AuthData(c))
 	})
 	app.Get("/about", func(c *fiber.Ctx) error {
-		return c.Render("about", data.CommonData(c))
+		return c.Render("about", data.AuthData(c))
 	})
 
 	app.Get("/blog", func(c *fiber.Ctx) error {
@@ -34,18 +34,18 @@ func SetupRoutes(app *fiber.App) {
 			return c.Status(fiber.StatusInternalServerError).Render("blog", fiber.Map{})
 		}
 
-		blogData := data.CommonData(c)
-		blogData["Posts"] = posts
+		blogData := data.AuthData(c)
+		blogData["posts"] = posts
 
 		return c.Render("blog", blogData)
 	})
 
 	app.Get("/dashboard", func(c *fiber.Ctx) error {
-		return c.Render("dashboard", data.CommonData(c))
+		return c.Render("dashboard", data.AuthData(c))
 	})
 
 	app.Get("/new-url", func(c *fiber.Ctx) error {
-		return c.Render("new-url", data.CommonData(c))
+		return c.Render("new-url", data.AuthData(c))
 
 	})
 
