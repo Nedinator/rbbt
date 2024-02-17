@@ -1,6 +1,7 @@
 package router
 
 import (
+	"github.com/Nedinator/ribbit/dashboard"
 	"github.com/Nedinator/ribbit/data"
 	"github.com/Nedinator/ribbit/handlers"
 	"github.com/Nedinator/ribbit/middleware"
@@ -28,7 +29,17 @@ func SetupRoutes(app *fiber.App) {
 	})
 
 	app.Get("/dashboard", middleware.JwtMiddleware, func(c *fiber.Ctx) error {
-		return c.Render("dashboard", data.AuthData(c))
+		urls, err := dashboard.GetLinks(c)
+		if err != nil {
+			return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
+		}
+		data := data.AuthData(c)
+		data["Links"] = urls
+		return c.Render("dashboard", data)
+	})
+
+	app.Get("/dashboard/:id", middleware.JwtMiddleware, func(c *fiber.Ctx) error {
+		return c.Render("sources", data.AuthData(c)) // TODO: Bind referer sources
 	})
 
 	app.Get("/new-url", func(c *fiber.Ctx) error {

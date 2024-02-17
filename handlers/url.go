@@ -33,7 +33,8 @@ func CreateURL(c *fiber.Ctx) error {
 
 	longurl := c.FormValue("longurl")
 	newurl.LongUrl = longurl
-
+	username := c.Locals("Username").(string)
+	newurl.Owner = username
 	shortid, err := gonanoid.New(6)
 	if err != nil {
 		return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")

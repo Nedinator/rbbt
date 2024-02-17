@@ -62,8 +62,6 @@ func AuthStatusMiddleware(c *fiber.Ctx) error {
 					userID = idClaim
 				}
 			}
-		} else {
-			fmt.Println("Token validation error:", err)
 		}
 	}
 
