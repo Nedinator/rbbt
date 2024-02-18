@@ -39,12 +39,17 @@ func SetupRoutes(app *fiber.App) {
 	})
 
 	app.Get("/dashboard/:id", middleware.JwtMiddleware, func(c *fiber.Ctx) error {
-		return c.Render("sources", data.AuthData(c)) // TODO: Bind referer sources
+		var url data.Url
+		renderData := data.AuthData(c)
+		urlParams := c.Params("id")
+		filter := map[string]string{"shortid": urlParams}
+		data.Db.Collection("url").FindOne(c.Context(), filter).Decode(&url)
+		renderData["url"] = url
+		return c.Render("stats", renderData)
 	})
 
 	app.Get("/new-url", func(c *fiber.Ctx) error {
 		return c.Render("new-url", data.AuthData(c))
-
 	})
 
 	app.Get("/search", handlers.SearchForStats)

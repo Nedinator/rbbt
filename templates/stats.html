@@ -1,44 +1,60 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>🐸 Ribbit - Statistics</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="bg-gray-800 text-gray-100">
-        {{template "partials/header" .}}
-        <main class="mx-auto max-w-4xl p-4">
-            <section>
-                <h2 class="mb-4 text-xl font-bold">Stats</h2>
-                <p><strong>Long URL:</strong> {{.url.LongUrl}}</p>
-                <p>
-                    <strong>Short URL:</strong>
-                    <a
-                        href="{{.url.ShortUrl}}"
-                        target="_blank"
-                        class="text-blue-400 hover:text-blue-600"
-                        >{{.url.ShortUrl}}</a
-                    >
-                </p>
-                <p><strong>Short ID:</strong> {{.url.ShortId}}</p>
-                <p><strong>Clicks:</strong> {{.url.Clicks}}</p>
-                <p><strong>Created At:</strong> {{.url.CreatedAt}}</p>
-            </section>
-            <div class="mt-4">
-                <a
-                    href="http://127.0.0.1:3000/stats/{{.url.ShortId}}"
-                    target="_self"
-                    class="text-blue-400 hover:text-blue-600"
-                    >♻️ Refresh this page</a
-                >
-            </div>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🐸 Ribbit - Statistics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-800 text-gray-100">
+    {{template "partials/header" .}}
+    <main class="mx-auto max-w-4xl p-4">
+        <section>
+            <h2 class="mb-4 text-xl font-bold">Stats</h2>
+            <p><strong>Long URL:</strong> {{.url.LongUrl}}</p>
+            <p>
+                <strong>Short URL:</strong>
+                <a href="{{.url.ShortUrl}}" target="_blank"
+                    class="text-blue-400 hover:text-blue-600">{{.url.ShortUrl}}</a>
+            </p>
+            <p><strong>Short ID:</strong> {{.url.ShortId}}</p>
+            <p><strong>Clicks:</strong> {{.url.Clicks}}</p>
+            <p><strong>Created At:</strong> {{.url.CreatedAt}}</p>
+        </section>
+        <div class="mt-4">
+            <a href="http://127.0.0.1:3000/stats/{{.url.ShortId}}" target="_self"
+                class="text-blue-400 hover:text-blue-600">♻️ Refresh this page</a>
+        </div>
+        <!-- Check if .url.Referer exists and if logged in -->
+        {{if .url.Referer }}
+        <section class="mt-8">
+            <h2 class="mb-4 text-xl font-bold">Sources</h2>
+            <table class="w-full table-auto">
+                <thead class="text-left">
+                    <tr>
+                        <th class="p-2 text-center text-lg">Source</th>
+                        <th class="p-2 text-center text-lg">Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .url.Referer}}
+                    <tr class="border-t">
+                        <td class="p-2 text-center">{{.Domain}}</td>
+                        <td class="p-2 text-center">{{.Clicks}}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+            {{end}}
             <p class="mt-4 italic">
                 Disclaimer: Clicks is incremented on each click, and does not
                 store any of your data. This means it can't tell when someone is
                 spam clicking, so don't always trust a link with a lot of
                 clicks.
             </p>
-        </main>
-    </body>
+    </main>
+</body>
+
 </html>

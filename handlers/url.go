@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/url"
+	"os"
 	"time"
 
 	"github.com/Nedinator/ribbit/data"
@@ -40,7 +41,7 @@ func CreateURL(c *fiber.Ctx) error {
 		return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
 	}
 	newurl.ShortId = shortid
-	newurl.ShortUrl = "http://127.0.0.1:3000/" + shortid
+	newurl.ShortUrl = os.Getenv("DOMAIN") + shortid
 	newurl.Clicks = 0
 	newurl.CreatedAt = time.Now()
 	data.Db.Collection("url").InsertOne(c.Context(), newurl)
