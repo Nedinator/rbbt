@@ -27,15 +27,17 @@
 - [x] Save referer data for a little bit more insight into clicks
 - [x] Switching to Tailwindcss (i'll use the cdn for now, but create my own imports laters)
 - [x] Removed blogs (i really don't know why I added it)
-- [ ] Custom toasts for errors and success messages
-- [ ] Setup middleware for dashboard and retrieve URLs associated with user
-    - [ ] Create a customer /dashboard/:id route and template to handle referer data.
+- [x] Currently /stats/:id loads referers whether you're logged in on the owner account or not.
+- [x] Customize toasts for errors and success messages
+- [x] Setup middleware for dashboard and retrieve URLs associated with user
+- [ ] Self review here before i continue on; I need to check naming conventions and make sure everything is consistent. Also a DRY check.
 - [ ] Decide on a way to display analytics
     - [ ] I have to decide whether static and server-side with go or dynamic and client-side with JS
 - [ ] Signed up user upgrades
     - [ ] Custom short URLs
     - [ ] Custom referer data
-
+    - [ ] Delete URLs
+- [ ] Look into embedding templates into the binary for building
 
 ## Setup
 
@@ -73,7 +75,7 @@
 **GET**
 
 - Set method to GET
-- Set URL to `http://127.0.0.1:3000/:id` with ':id' being the shortId of a corresponding document in your MongoDB
+- Set URL to `http://127.0.0.1:3000/stats/:id` with ':id' being the shortId of a corresponding document in your MongoDB
 
 6. **Setup ENV variables**
 
