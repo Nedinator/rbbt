@@ -105,7 +105,18 @@ func SearchForStats(c *fiber.Ctx) error {
 
 		return c.Status(500).Render("404", nil)
 	}
+	timzoneCookie := c.Cookies("timezone", "UTC")
+	loc, err := time.LoadLocation(timzoneCookie)
+	if err != nil {
+		loc = time.UTC
+	}
+	userCreatedAt, err := convertToLocalTimeUsingLocation(res.CreatedAt, loc)
+	res.CreatedAt = userCreatedAt
 	nextPageData := data.AuthData(c)
 	nextPageData["url"] = res
 	return c.Render("stats", nextPageData)
+}
+
+func convertToLocalTimeUsingLocation(t time.Time, loc *time.Location) (time.Time, error) {
+	return t.In(loc), nil
 }

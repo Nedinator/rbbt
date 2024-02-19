@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🐸 Ribbit - Statistics</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            document.cookie = "timezone=" + timezone + ";path=/"; // Setting the timezone as a cookie
+        });
+    </script>
+
 </head>
 
 <body class="bg-gray-800 text-gray-100">
@@ -21,7 +28,7 @@
             </p>
             <p><strong>Short ID:</strong> {{.url.ShortId}}</p>
             <p><strong>Clicks:</strong> {{.url.Clicks}}</p>
-            <p><strong>Created At:</strong> {{.url.CreatedAt}}</p>
+            <p><strong>Created At:</strong> {{.url.CreatedAt.Format "Jan 02, 2006"}}</p>
         </section>
         <div class="mt-4">
             <a href="http://127.0.0.1:3000/stats/{{.url.ShortId}}" target="_self"
