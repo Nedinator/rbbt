@@ -30,6 +30,7 @@
 - [x] Currently /stats/:id loads referers whether you're logged in on the owner account or not.
 - [x] Customize toasts for errors and success messages
 - [x] Setup middleware for dashboard and retrieve URLs associated with user
+- [ ] Found a bug with the stats.html page. When you search for the link it works fine but going from dashboard uses the wrong url for the link to the short url. I think I may just change this to a button that copies the link to the clipboard.
 - [ ] Self review here before i continue on; I need to check naming conventions and make sure everything is consistent. Also a DRY check.
 - [ ] Decide on a way to display analytics
     - [ ] I have to decide whether static and server-side with go or dynamic and client-side with JS

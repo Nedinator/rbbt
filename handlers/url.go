@@ -36,13 +36,21 @@ func CreateURL(c *fiber.Ctx) error {
 	newurl.LongUrl = longurl
 	username := c.Locals("Username").(string)
 	newurl.Owner = username
-	shortid, err := gonanoid.New(6)
-	if err != nil {
-		return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
+	customId := c.FormValue("shortId")
+	var shortid string
+	if customId == "" {
+		generatedId, err := gonanoid.New(6)
+		if err != nil {
+			return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
+		}
+		shortid = generatedId
+	} else {
+		shortid = customId
 	}
 	newurl.ShortId = shortid
-	newurl.ShortUrl = os.Getenv("DOMAIN") + shortid
+	newurl.ShortUrl = os.Getenv("DOMAIN") + "/" + shortid
 	newurl.Clicks = 0
+	newurl.Referer = []data.Referer{}
 	newurl.CreatedAt = time.Now()
 	data.Db.Collection("url").InsertOne(c.Context(), newurl)
 

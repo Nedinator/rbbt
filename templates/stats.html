@@ -20,11 +20,14 @@
     <main class="mx-auto max-w-4xl p-4">
         <section>
             <h2 class="mb-4 text-xl font-bold">Stats</h2>
-            <p><strong>Long URL:</strong> {{.url.LongUrl}}</p>
+            <p><strong>Long URL:</strong> <a href="{{.url.LongUrl}}">{{.url.LongUrl}}</a></p>
             <p>
                 <strong>Short URL:</strong>
-                <a href="{{.url.ShortUrl}}" target="_blank"
-                    class="text-blue-400 hover:text-blue-600">{{.url.ShortUrl}}</a>
+                <span id="urlToCopy">{{.url.ShortUrl}}</span>
+                <button onclick="copyToClipboard()"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Copy to Clipboard
+                </button>
             </p>
             <p><strong>Short ID:</strong> {{.url.ShortId}}</p>
             <p><strong>Clicks:</strong> {{.url.Clicks}}</p>
@@ -61,6 +64,17 @@
                 clicks.
             </p>
     </main>
+
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("urlToCopy").innerText;
+            navigator.clipboard.writeText(copyText).then(() => {
+                alert("URL copied to clipboard!");
+            }).catch(err => {
+                console.error('Error in copying text: ', err);
+            });
+        }
+    </script>
 </body>
 
 </html>
