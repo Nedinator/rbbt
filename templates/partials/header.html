@@ -5,60 +5,96 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="bg-gray-800 text-gray-100">
-        <header class="bg-gray-900">
+        <header class="bg-gray-900 shadow-lg">
             <nav
-                class="mx-auto flex max-w-6xl items-center justify-between px-4 py-6"
+                class="container mx-auto flex flex-wrap items-center justify-between p-5"
             >
-                <div class="flex-grow">
-                    <a href="/" class="text-xl font-bold text-indigo-400"
-                        >🐸 Ribbit</a
+                <a
+                    href="/"
+                    class="flex items-center text-2xl font-bold text-indigo-500 hover:text-indigo-300"
+                >
+                    🐸 Ribbit
+                </a>
+
+                <div class="block lg:hidden">
+                    <button
+                        class="text-indigo-500 outline-none hover:text-indigo-300"
                     >
+                        <svg
+                            class="h-6 w-6 fill-current"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <title>Menu</title>
+                            <path
+                                d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"
+                            />
+                        </svg>
+                    </button>
                 </div>
 
-                <ul
-                    class="hidden md:flex md:flex-grow md:items-center md:justify-center md:space-x-4"
+                <div
+                    class="hidden w-full flex-grow pt-6 lg:flex lg:w-auto lg:items-center lg:pt-0"
+                    id="nav-content"
                 >
-                    <li>
-                        <a href="/new-url" class="hover:text-indigo-300"
-                            >Shorten</a
+                    <ul
+                        class="list-reset flex-1 items-center justify-end space-x-4 lg:flex"
+                    >
+                        <li>
+                            <a
+                                href="/new-url"
+                                class="inline-block px-4 py-2 text-white hover:text-indigo-300"
+                                >Shorten</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="/about"
+                                class="inline-block px-4 py-2 text-white hover:text-indigo-300"
+                                >About</a
+                            >
+                        </li>
+                        {{if .IsLoggedIn}}
+                        <li>
+                            <a
+                                href="/dashboard/"
+                                class="inline-block px-4 py-2 text-white hover:text-indigo-300"
+                                >Dashboard</a
+                            >
+                        </li>
+                        {{end}}
+                    </ul>
+
+                    <div>
+                        {{if .IsLoggedIn}}
+                        <span class="mr-4">Welcome, {{.Username}}</span>
+                        <form
+                            action="/auth/logout"
+                            method="POST"
+                            class="inline"
                         >
-                    </li>
-                    <li>
-                        <a href="/about" class="hover:text-indigo-300">About</a>
-                    </li>
-                    {{if .IsLoggedIn}}
-                    <li>
-                        <a href="/dashboard/" class="hover:text-indigo-300"
-                            >Dashboard</a
+                            <button
+                                type="submit"
+                                class="rounded bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700"
+                            >
+                                Sign Out
+                            </button>
+                        </form>
+                        {{else}}
+                        <a
+                            href="/login"
+                            class="mr-2 rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-700"
+                            >Login</a
+                        >
+                        <a
+                            href="/signup"
+                            class="rounded bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-700"
+                            >Signup</a
                         >
                         {{end}}
-                    </li>
-                </ul>
-
-                <div class="flex items-center space-x-4">
-                    {{if .IsLoggedIn}}
-                    <span class="mr-4">Welcome, {{.Username}}</span>
-                    <form action="/auth/logout" method="POST" class="inline">
-                        <button
-                            type="submit"
-                            class="rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700"
-                        >
-                            Sign Out
-                        </button>
-                    </form>
-                    {{else}}
-                    <a
-                        href="/login"
-                        class="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-700"
-                        >Login</a
-                    >
-                    <a
-                        href="/signup"
-                        class="rounded bg-green-500 px-3 py-1 text-white hover:bg-green-700"
-                        >Signup</a
-                    >
-                    {{end}} {{template "partials/search" .}}
+                    </div>
                 </div>
+                {{template "partials/search" .}}
             </nav>
         </header>
     </body>
