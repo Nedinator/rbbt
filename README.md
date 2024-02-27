@@ -37,11 +37,11 @@
 - [ ] Signed up user upgrades
     - [ ] Custom short URLs
     - [ ] Custom referer data
-        - [ ] Custom tags
+        - [ ] Custom tags to categorize for analytics
     - [ ] Delete URLs
 - [ ] Look into embedding templates into the binary for building and deploying
 - [ ] Redo the home page. Finally add screenshots and more details.
-- [ ] Self review once finished; I need to check naming conventions and make sure everything is consistent. Also a DRY check.
+- [ ] Switch to Postgres
 
 ## Setup
 

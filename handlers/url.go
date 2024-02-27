@@ -125,6 +125,16 @@ func SearchForStats(c *fiber.Ctx) error {
 	return c.Render("stats", nextPageData)
 }
 
+func DeleteUrl(c *fiber.Ctx) error {
+	urlParams := c.Params("id")
+	filter := bson.M{"shortid": urlParams}
+	_, err := data.Db.Collection("url").DeleteOne(c.Context(), filter)
+	if err != nil {
+		return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
+	}
+	return c.Redirect("/dashboard")
+}
+
 func convertToLocalTimeUsingLocation(t time.Time, loc *time.Location) (time.Time, error) {
 	return t.In(loc), nil
 }
