@@ -5,11 +5,12 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
+	"os"
 )
 
 const dbName = "rbbt"
-const mongoURI = "mongodb://localhost:27017/" + dbName
 
+var mongoURI = os.Getenv("MONGO_URI")
 var Db *mongo.Database
 
 func Connect() (*mongo.Client, *mongo.Database, error) {
