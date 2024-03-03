@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/url"
 	"os"
 	"time"
@@ -87,6 +88,9 @@ func Redirect(c *fiber.Ctx) error {
 				domainFilter := bson.M{"shortid": urlParams, "referer.domain": domain}
 				domainUpdate := bson.M{"$inc": bson.M{"referer.$.clicks": 1}}
 				_, err = data.Db.Collection("url").UpdateOne(c.Context(), domainFilter, domainUpdate)
+				if err != nil {
+					log.Fatalf("Mongo failed to update referers")
+				}
 				domainExists = true
 				break
 			}
@@ -95,6 +99,9 @@ func Redirect(c *fiber.Ctx) error {
 		if !domainExists {
 			newReferer := bson.M{"$push": bson.M{"referer": data.Referer{Domain: domain, Clicks: 1}}}
 			_, err = data.Db.Collection("url").UpdateOne(c.Context(), filter, newReferer)
+			if err != nil {
+				log.Fatalf("Mongo failed to update referers.")
+			}
 		}
 	}
 
@@ -119,6 +126,9 @@ func SearchForStats(c *fiber.Ctx) error {
 		loc = time.UTC
 	}
 	userCreatedAt, err := convertToLocalTimeUsingLocation(res.CreatedAt, loc)
+	if err != nil {
+		log.Fatalf("Failed to convert to local time.")
+	}
 	res.CreatedAt = userCreatedAt
 	nextPageData := data.AuthData(c)
 	nextPageData["url"] = res
@@ -130,7 +140,7 @@ func DeleteUrl(c *fiber.Ctx) error {
 	filter := bson.M{"shortid": urlParams}
 	_, err := data.Db.Collection("url").DeleteOne(c.Context(), filter)
 	if err != nil {
-		return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
+		return c.Status(500).SendString("Mongo failed to delete URL.")
 	}
 	return c.Redirect("/dashboard")
 }
