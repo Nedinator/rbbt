@@ -43,7 +43,8 @@ _A simple URL shortener implemented in Go using Fiber and MongoDB and a frontend
   - [ ] Delete URLs
 - [ ] Look into embedding templates into the binary for building and deploying
 - [ ] Redo the home page. Finally add screenshots and more details.
-- [ ] Switch to Postgres
+- [ ] Switch to GORM with possibly postgres
+  - [ ] I still need to double check that GORM is a good option for this project, but also going to learn how to do a real PR with this one.
 
 ## Setup
 

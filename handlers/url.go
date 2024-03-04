@@ -125,10 +125,7 @@ func SearchForStats(c *fiber.Ctx) error {
 	if err != nil {
 		loc = time.UTC
 	}
-	userCreatedAt, err := convertToLocalTimeUsingLocation(res.CreatedAt, loc)
-	if err != nil {
-		log.Fatalf("Failed to convert to local time.")
-	}
+	userCreatedAt := convertToLocalTimeUsingLocation(res.CreatedAt, loc)
 	res.CreatedAt = userCreatedAt
 	nextPageData := data.AuthData(c)
 	nextPageData["url"] = res
@@ -145,6 +142,6 @@ func DeleteUrl(c *fiber.Ctx) error {
 	return c.Redirect("/dashboard")
 }
 
-func convertToLocalTimeUsingLocation(t time.Time, loc *time.Location) (time.Time, error) {
-	return t.In(loc), nil
+func convertToLocalTimeUsingLocation(t time.Time, loc *time.Location) time.Time {
+	return t.In(loc)
 }
