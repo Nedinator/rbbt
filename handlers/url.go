@@ -9,21 +9,14 @@ import (
 	"github.com/Nedinator/ribbit/data"
 	"github.com/gofiber/fiber/v2"
 	gonanoid "github.com/matoous/go-nanoid/v2"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
+	"gorm.io/gorm"
 )
 
 func GetUrlStats(c *fiber.Ctx) error {
 	urlParams := c.Params("id")
-	filter := bson.M{"shortid": urlParams}
 	var res data.Url
-	err := data.Db.Collection("url").FindOne(c.Context(), filter).Decode(&res)
-
-	if err != nil {
-		if err == mongo.ErrNoDocuments {
-			return c.Status(404).Render("404", nil)
-		}
-		return c.Status(500).Render("404", nil)
+	if err := data.DB().Where("short_id = ?", urlParams).First(&res).Error; err != nil {
+		return c.Status(404).Render("404", nil)
 	}
 	statsData := data.AuthData(c)
 	statsData["url"] = res
@@ -31,29 +24,22 @@ func GetUrlStats(c *fiber.Ctx) error {
 }
 
 func CreateURL(c *fiber.Ctx) error {
-	var newurl data.Url
-
-	longurl := c.FormValue("longurl")
-	newurl.LongUrl = longurl
-	username := c.Locals("Username").(string)
-	newurl.Owner = username
-	customId := c.FormValue("shortId")
-	var shortid string
-	if customId == "" {
-		generatedId, err := gonanoid.New(6)
-		if err != nil {
-			return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
-		}
-		shortid = generatedId
-	} else {
-		shortid = customId
+	newurl := data.Url{
+		LongUrl:   c.FormValue("longurl"),
+		Owner:     c.Locals("Username").(string),
+		ShortId:   c.FormValue("shortId"),
+		Clicks:    0,
+		CreatedAt: time.Now(),
 	}
-	newurl.ShortId = shortid
-	newurl.ShortUrl = os.Getenv("DOMAIN") + "/" + shortid
-	newurl.Clicks = 0
-	newurl.Referer = []data.Referer{}
-	newurl.CreatedAt = time.Now()
-	data.Db.Collection("url").InsertOne(c.Context(), newurl)
+
+	if newurl.ShortId == "" {
+		newurl.ShortId, _ = gonanoid.New(6)
+	}
+	newurl.ShortUrl = os.Getenv("DOMAIN") + "/" + newurl.ShortId
+
+	if err := data.DB().Create(&newurl).Error; err != nil {
+		return c.Status(500).SendString("Internal Server Error.")
+	}
 
 	nextPageData := data.AuthData(c)
 	nextPageData["url"] = newurl
@@ -63,44 +49,42 @@ func CreateURL(c *fiber.Ctx) error {
 func Redirect(c *fiber.Ctx) error {
 	var res data.Url
 	urlParams := c.Params("id")
-	filter := bson.M{"shortid": urlParams}
-	update := bson.M{"$inc": bson.M{"clicks": 1}}
 
-	err := data.Db.Collection("url").FindOneAndUpdate(c.Context(), filter, update).Decode(&res)
-
+	err := data.DB().Model(&data.Url{}).Where("shortid = ?", urlParams).UpdateColumn("clicks", gorm.Expr("clicks + ?", 1)).Error
 	if err != nil {
-		if err == mongo.ErrNoDocuments {
-			return c.Status(404).Render("404", nil)
+		if err == gorm.ErrRecordNotFound {
+			return c.Status(404).SendString("URL Not Found")
 		}
-		return c.Status(500).Render("404", nil)
+		return c.Status(500).SendString("Internal Server Error")
+	}
+
+	err = data.DB().Preload("Referer").Where("shortid = ?", urlParams).First(&res).Error
+	if err != nil {
+		return c.Status(500).SendString("Internal Server Error")
 	}
 
 	rawURL := c.Get("Referer")
 	parsedURL, err := url.Parse(rawURL)
 	if err != nil {
-		return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
-	}
-	domain := parsedURL.Hostname()
-	if domain != "" {
-		domainExists := false
-		for _, ref := range res.Referer {
-			if ref.Domain == domain {
-				domainFilter := bson.M{"shortid": urlParams, "referer.domain": domain}
-				domainUpdate := bson.M{"$inc": bson.M{"referer.$.clicks": 1}}
-				_, err = data.Db.Collection("url").UpdateOne(c.Context(), domainFilter, domainUpdate)
-				if err != nil {
-					log.Fatalf("Mongo failed to update referers")
-				}
-				domainExists = true
-				break
-			}
-		}
+		log.Println("Error parsing referer URL:", err)
 
-		if !domainExists {
-			newReferer := bson.M{"$push": bson.M{"referer": data.Referer{Domain: domain, Clicks: 1}}}
-			_, err = data.Db.Collection("url").UpdateOne(c.Context(), filter, newReferer)
-			if err != nil {
-				log.Fatalf("Mongo failed to update referers.")
+	} else {
+		domain := parsedURL.Hostname()
+		if domain != "" {
+			domainExists := false
+			for i, ref := range res.Referer {
+				if ref.Domain == domain {
+					res.Referer[i].Clicks++
+					data.DB().Save(&res)
+					domainExists = true
+					break
+				}
+			}
+
+			if !domainExists {
+				newReferer := data.Referer{Domain: domain, Clicks: 1, Tags: []string{}}
+				res.Referer = append(res.Referer, newReferer)
+				data.DB().Save(&res)
 			}
 		}
 	}
@@ -109,24 +93,17 @@ func Redirect(c *fiber.Ctx) error {
 }
 
 func SearchForStats(c *fiber.Ctx) error {
-	var res data.Url
 	searchID := c.Query("searchid")
-	filter := bson.M{"shortid": searchID}
-	err := data.Db.Collection("url").FindOne(c.Context(), filter).Decode(&res)
-	if err != nil {
-		if err == mongo.ErrNoDocuments {
-			return c.Status(404).Render("404", nil)
-		}
-
-		return c.Status(500).Render("404", nil)
+	var res data.Url
+	if err := data.DB().Where("short_id = ?", searchID).First(&res).Error; err != nil {
+		return c.Status(404).Render("404", nil)
 	}
 	timzoneCookie := c.Cookies("timezone", "UTC")
 	loc, err := time.LoadLocation(timzoneCookie)
 	if err != nil {
 		loc = time.UTC
 	}
-	userCreatedAt := convertToLocalTimeUsingLocation(res.CreatedAt, loc)
-	res.CreatedAt = userCreatedAt
+	res.CreatedAt = convertToLocalTimeUsingLocation(res.CreatedAt, loc)
 	nextPageData := data.AuthData(c)
 	nextPageData["url"] = res
 	return c.Render("stats", nextPageData)
@@ -134,10 +111,8 @@ func SearchForStats(c *fiber.Ctx) error {
 
 func DeleteUrl(c *fiber.Ctx) error {
 	urlParams := c.Params("id")
-	filter := bson.M{"shortid": urlParams}
-	_, err := data.Db.Collection("url").DeleteOne(c.Context(), filter)
-	if err != nil {
-		return c.Status(500).SendString("Mongo failed to delete URL.")
+	if err := data.DB().Where("short_id = ?", urlParams).Delete(&data.Url{}).Error; err != nil {
+		return c.Status(500).SendString("Failed to delete URL.")
 	}
 	return c.Redirect("/dashboard")
 }
