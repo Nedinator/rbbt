@@ -82,7 +82,7 @@ func checkUsername(username string) bool {
 	return true
 }
 
-func GenerateJWT(id string, username string) (string, error) {
+func GenerateJWT(id uint, username string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 	claims["id"] = id

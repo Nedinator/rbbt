@@ -25,11 +25,10 @@ func GetUrlStats(c *fiber.Ctx) error {
 
 func CreateURL(c *fiber.Ctx) error {
 	newurl := data.Url{
-		LongUrl:   c.FormValue("longurl"),
-		Owner:     c.Locals("Username").(string),
-		ShortId:   c.FormValue("shortId"),
-		Clicks:    0,
-		CreatedAt: time.Now(),
+		LongUrl: c.FormValue("longurl"),
+		Owner:   c.Locals("Username").(string),
+		ShortId: c.FormValue("shortId"),
+		Clicks:  0,
 	}
 
 	if newurl.ShortId == "" {
@@ -72,9 +71,9 @@ func Redirect(c *fiber.Ctx) error {
 		domain := parsedURL.Hostname()
 		if domain != "" {
 			domainExists := false
-			for i, ref := range res.Referer {
+			for i, ref := range res.Referers {
 				if ref.Domain == domain {
-					res.Referer[i].Clicks++
+					res.Referers[i].Clicks++
 					data.DB().Save(&res)
 					domainExists = true
 					break
@@ -83,7 +82,7 @@ func Redirect(c *fiber.Ctx) error {
 
 			if !domainExists {
 				newReferer := data.Referer{Domain: domain, Clicks: 1, Tags: []string{}}
-				res.Referer = append(res.Referer, newReferer)
+				res.Referers = append(res.Referers, newReferer)
 				data.DB().Save(&res)
 			}
 		}
