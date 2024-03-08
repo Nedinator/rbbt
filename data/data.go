@@ -1,31 +1,31 @@
 package data
 
 import (
-	"time"
-
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 type Url struct {
-	ShortUrl  string    `json:"shorturl" bson:"shorturl"`
-	ShortId   string    `json:"shortid" bson:"shortid"`
-	LongUrl   string    `json:"longurl" bson:"longurl"`
-	Clicks    int       `json:"clicks" bson:"clicks"`
-	CreatedAt time.Time `json:"createdat" bson:"createdat"`
-	Owner     string    `json:"owner" bson:"owner"`
-	Referer   []Referer `json:"referer" bson:"referer"`
+	gorm.Model
+	ShortUrl string
+	ShortId  string
+	LongUrl  string
+	Clicks   int
+	Owner    string
+	Referers map[string]Referer `gorm:"-"`
 }
 
 type Referer struct {
-	Domain string   `json:"domain" bson:"domain"`
-	Clicks int      `json:"clicks" bson:"clicks"`
-	Tags   []string `json:"tags" bson:"tags"`
+	UrlID  uint
+	Domain string
+	Clicks int
+	Tags   []string
 }
 
 type User struct {
-	ID       string `json:"id" bson:"id"`
-	Username string `json:"username" bson:"username"`
-	Password string `json:"password" bson:"password"`
+	gorm.Model
+	Username string
+	Password string
 }
 
 func AuthData(c *fiber.Ctx) fiber.Map {

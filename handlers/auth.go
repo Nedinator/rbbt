@@ -8,9 +8,6 @@ import (
 	"github.com/Nedinator/ribbit/util"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	gonanoid "github.com/matoous/go-nanoid/v2"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func Signup(c *fiber.Ctx) error {
@@ -19,7 +16,7 @@ func Signup(c *fiber.Ctx) error {
 	if err := c.BodyParser(user); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
-	if checkUsername(user.Username, c) {
+	if checkUsername(user.Username) {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Username already exists"})
 	}
 
@@ -29,15 +26,7 @@ func Signup(c *fiber.Ctx) error {
 	}
 	user.Password = hashedPassword
 
-	id, err := gonanoid.New(15)
-	if err != nil {
-		return c.Status(500).SendString("Internal Server Error. If you see this you should prolly dial 911...")
-	}
-
-	user.ID = id
-
-	_, err = data.Db.Collection("users").InsertOne(c.Context(), user)
-	if err != nil {
+	if err := data.DB().Create(&user).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot create user"})
 	}
 
@@ -45,23 +34,17 @@ func Signup(c *fiber.Ctx) error {
 }
 
 func Login(c *fiber.Ctx) error {
-	user := new(data.User)
-	if err := c.BodyParser(user); err != nil {
+	loginUser := new(data.User)
+	if err := c.BodyParser(loginUser); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "Cannot parse body"})
 	}
 
-	dbUser := new(data.User)
-	filter := bson.M{"username": user.Username}
-
-	err := data.Db.Collection("users").FindOne(c.Context(), filter).Decode(&dbUser)
-	if err != nil {
-		if err == mongo.ErrNoDocuments {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials"})
-		}
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Internal error"})
+	var dbUser data.User
+	if err := data.DB().Where("username = ?", loginUser.Username).First(&dbUser).Error; err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials", "success": false})
 	}
 
-	if !util.CheckPasswordHash(user.Password, dbUser.Password) {
+	if !util.CheckPasswordHash(loginUser.Password, dbUser.Password) {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials", "success": false})
 	}
 
@@ -79,7 +62,6 @@ func Login(c *fiber.Ctx) error {
 	})
 
 	return c.JSON(fiber.Map{"message": "Login successful", "success": true})
-
 }
 
 func Logout(c *fiber.Ctx) error {
@@ -92,18 +74,15 @@ func Logout(c *fiber.Ctx) error {
 	return c.Redirect("/")
 }
 
-func checkUsername(username string, c *fiber.Ctx) bool {
-	filter := bson.M{"username": username}
-	user := new(data.User)
-	if err := data.Db.Collection("users").FindOne(c.Context(), filter).Decode(&user); err != nil {
-		if err == mongo.ErrNoDocuments {
-			return false
-		}
+func checkUsername(username string) bool {
+	var user data.User
+	if err := data.DB().Where("username = ?", username).First(&user).Error; err != nil {
+		return false
 	}
 	return true
 }
 
-func GenerateJWT(id string, username string) (string, error) {
+func GenerateJWT(id uint, username string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 	claims["id"] = id

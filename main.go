@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"os"
 
 	"github.com/Nedinator/ribbit/data"
 
@@ -11,12 +11,10 @@ import (
 )
 
 func main() {
-	client, _, err := data.Connect()
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	defer data.Disconnect(client)
+	dsn := os.Getenv("DB_DSN")
+	data.OpenDB(dsn)
+
 	engine := html.New("./templates", ".html")
 	app := fiber.New(fiber.Config{
 		Views: engine,

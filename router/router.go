@@ -1,11 +1,14 @@
 package router
 
 import (
+	"errors"
+
 	"github.com/Nedinator/ribbit/dashboard"
 	"github.com/Nedinator/ribbit/data"
 	"github.com/Nedinator/ribbit/handlers"
 	"github.com/Nedinator/ribbit/middleware"
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 func SetupRoutes(app *fiber.App) {
@@ -42,11 +45,20 @@ func SetupRoutes(app *fiber.App) {
 	app.Get("/dashboard/:id", middleware.JwtMiddleware, func(c *fiber.Ctx) error {
 		var url data.Url
 		renderData := data.AuthData(c)
+
 		urlParams := c.Params("id")
-		filter := map[string]string{"shortid": urlParams}
-		data.Db.Collection("url").FindOne(c.Context(), filter).Decode(&url)
+
+		result := data.DB().Where("short_id = ?", urlParams).First(&url)
+		if result.Error != nil {
+			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+				return c.Status(fiber.StatusNotFound).Render("404", nil) // Assuming you have a 404 template
+			}
+
+			return c.Status(fiber.StatusInternalServerError).Render("error", fiber.Map{"message": "Internal Server Error"})
+		}
+
 		renderData["url"] = url
-		return c.Render("stats", renderData)
+		return c.Render("stats", renderData) // Ensure you have a "stats" template
 	})
 
 	app.Get("/new-url", func(c *fiber.Ctx) error {
