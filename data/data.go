@@ -12,11 +12,11 @@ type Url struct {
 	LongUrl  string
 	Clicks   int
 	Owner    string
-	Referers []Referer
+	Referers map[string]Referer `gorm:"-"`
 }
 
 type Referer struct {
-	UrlID  uint `gorm:"foreignKey:urlid"`
+	UrlID  uint
 	Domain string
 	Clicks int
 	Tags   []string

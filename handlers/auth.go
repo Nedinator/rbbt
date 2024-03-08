@@ -41,27 +41,27 @@ func Login(c *fiber.Ctx) error {
 
 	var dbUser data.User
 	if err := data.DB().Where("username = ?", loginUser.Username).First(&dbUser).Error; err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials", "success": false})
 	}
 
 	if !util.CheckPasswordHash(loginUser.Password, dbUser.Password) {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Invalid credentials", "success": false})
 	}
 
 	token, err := GenerateJWT(dbUser.ID, dbUser.Username)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot generate token"})
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot generate token", "success": false})
 	}
 
 	c.Cookie(&fiber.Cookie{
-		Name:     "token",
+		Name:     "rbbt_token",
 		Value:    token,
 		Expires:  time.Now().Add(24 * time.Hour * 30),
 		HTTPOnly: true,
 		SameSite: "Lax",
 	})
 
-	return c.JSON(fiber.Map{"message": "Login successful"})
+	return c.JSON(fiber.Map{"message": "Login successful", "success": true})
 }
 
 func Logout(c *fiber.Ctx) error {

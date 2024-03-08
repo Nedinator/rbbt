@@ -70,21 +70,15 @@ func Redirect(c *fiber.Ctx) error {
 	} else {
 		domain := parsedURL.Hostname()
 		if domain != "" {
-			domainExists := false
-			for i, ref := range res.Referers {
-				if ref.Domain == domain {
-					res.Referers[i].Clicks++
-					data.DB().Save(&res)
-					domainExists = true
-					break
-				}
-			}
-
-			if !domainExists {
+			referer, exists := res.Referers[domain]
+			if exists {
+				referer.Clicks++
+				res.Referers[domain] = referer
+			} else {
 				newReferer := data.Referer{Domain: domain, Clicks: 1, Tags: []string{}}
-				res.Referers = append(res.Referers, newReferer)
-				data.DB().Save(&res)
+				res.Referers[domain] = newReferer
 			}
+			data.DB().Save(&res)
 		}
 	}
 
