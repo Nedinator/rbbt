@@ -49,7 +49,7 @@ func Redirect(c *fiber.Ctx) error {
 	var res data.Url
 	urlParams := c.Params("id")
 
-	err := data.DB().Model(&data.Url{}).Where("shortid = ?", urlParams).UpdateColumn("clicks", gorm.Expr("clicks + ?", 1)).Error
+	err := data.DB().Model(&data.Url{}).Where("short_id = ?", urlParams).UpdateColumn("clicks", gorm.Expr("clicks + ?", 1)).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(404).SendString("URL Not Found")
@@ -57,16 +57,20 @@ func Redirect(c *fiber.Ctx) error {
 		return c.Status(500).SendString("Internal Server Error")
 	}
 
-	err = data.DB().Preload("Referer").Where("shortid = ?", urlParams).First(&res).Error
+	err = data.DB().Where("short_id = ?", urlParams).First(&res).Error
 	if err != nil {
+		log.Panic(err)
 		return c.Status(500).SendString("Internal Server Error")
+	}
+
+	if res.Referers == nil {
+		res.Referers = make(map[string]data.Referer)
 	}
 
 	rawURL := c.Get("Referer")
 	parsedURL, err := url.Parse(rawURL)
 	if err != nil {
 		log.Println("Error parsing referer URL:", err)
-
 	} else {
 		domain := parsedURL.Hostname()
 		if domain != "" {

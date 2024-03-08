@@ -7,16 +7,16 @@ import (
 
 type Url struct {
 	gorm.Model
-	ShortUrl string
-	ShortId  string
-	LongUrl  string
+	ShortUrl string `gorm:"column:short_url"`
+	ShortId  string `gorm:"column:short_id"`
+	LongUrl  string `gorm:"column:long_url"`
 	Clicks   int
 	Owner    string
 	Referers map[string]Referer `gorm:"-"`
 }
 
 type Referer struct {
-	UrlID  uint
+	UrlID  uint `gorm:"column:url_id;foreignKey:url_id"`
 	Domain string
 	Clicks int
 	Tags   []string
