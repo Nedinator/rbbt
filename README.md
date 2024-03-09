@@ -64,7 +64,7 @@ _A simple URL shortener implemented in Go using Fiber and MongoDB and a frontend
 
    ```bash
    export DOMAIN=127.0.0.1:3000
-   export MONGO_URI=mongodb://localhost:27017
+   export DB_DSN=get-a-postgres-db
    export JWT_SECRET=this_can_be_anything_just_keep_it_the_same_or_users_cant_login
    ```
 
@@ -77,8 +77,8 @@ _A simple URL shortener implemented in Go using Fiber and MongoDB and a frontend
 5. **Or Build the Application**
 
    ```bash
-   go build -o ribbit .
-   ./ribbit
+   go build -o builds/ribbit .
+   ./builds/ribbit
    ```
 
 ## License
