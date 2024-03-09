@@ -32,20 +32,16 @@ _A simple URL shortener implemented in Go using Fiber and MongoDB and a frontend
 - [x] Customize toasts for errors and success messages
 - [x] Setup middleware for dashboard and retrieve URLs associated with user
 - [x] Found a bug with the stats.html page. When you search for the link it works fine but going from dashboard uses the wrong url for the link to the short url. I think I may just change this to a button that copies the link to the clipboard.
-  - [ ] I've finished changing stats but now I want to display toasts instead of alerts.
 - [x] Decided on server side for graphs.
   - [x] I have to decide whether static and server-side with go or dynamic and client-side with JS
-- [ ] Stopping here to build it out for production.
 - [ ] Signed up user upgrades
   - [x] Custom short URLs
     - [ ] Need to check this. Right now it's just whatever they type which could cause duplicates.
   - [ ] Custom referer data
     - [ ] Custom tags to categorize for analytics
   - [ ] Delete URLs
-- [ ] Look into embedding templates into the binary for building and deploying
 - [ ] Redo the home page. Finally add screenshots and more details.
-- [ ] Switch to GORM with possibly postgres
-  - [ ] I still need to double check that GORM is a good option for this project, but also going to learn how to do a real PR with this one.
+- [x] Switch to GORM with with postgres
 
 ## Setup
 
