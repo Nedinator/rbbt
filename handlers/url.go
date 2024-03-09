@@ -27,12 +27,17 @@ func CreateURL(c *fiber.Ctx) error {
 	newurl := data.Url{
 		LongUrl: c.FormValue("longurl"),
 		Owner:   c.Locals("Username").(string),
-		ShortId: c.FormValue("shortId"),
+		ShortId: c.FormValue("shortid"),
 		Clicks:  0,
 	}
 
 	if newurl.ShortId == "" {
-		newurl.ShortId, _ = gonanoid.New(6)
+		generatedId, err := gonanoid.New(6)
+		if err != nil {
+			return c.Status(500).SendString("Internal Server Error.")
+		} else {
+			newurl.ShortId = generatedId
+		}
 	}
 	newurl.ShortUrl = os.Getenv("DOMAIN") + "/" + newurl.ShortId
 
@@ -79,7 +84,7 @@ func Redirect(c *fiber.Ctx) error {
 				referer.Clicks++
 				res.Referers[domain] = referer
 			} else {
-				newReferer := data.Referer{Domain: domain, Clicks: 1, Tags: []string{}}
+				newReferer := data.Referer{Domain: domain, Clicks: 1, Tags: make(map[string]string)}
 				res.Referers[domain] = newReferer
 			}
 			data.DB().Save(&res)

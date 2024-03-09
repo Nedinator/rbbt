@@ -15,7 +15,7 @@ func OpenDB(dsn string) {
 	if err != nil {
 		log.Panicf("Failed to connect to database: %v", err)
 	}
-	db.AutoMigrate(&User{}, Url{})
+	db.AutoMigrate(&User{}, &Url{}, &Referer{})
 }
 
 func DB() *gorm.DB {
