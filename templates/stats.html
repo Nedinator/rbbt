@@ -37,7 +37,7 @@
             <a href="http://127.0.0.1:3000/stats/{{.url.ShortId}}" target="_self"
                 class="text-blue-400 hover:text-blue-600">♻️ Refresh this page</a>
         </div>
-        {{if and .url.Referer (eq .url.Owner .Username)}}
+        {{if and .url.Referers (eq .url.Owner .Username)}}
         <section class="mt-8">
             <h2 class="mb-4 text-xl font-bold">Sources</h2>
             <table class="w-full table-auto">

@@ -52,7 +52,7 @@ func Redirect(c *fiber.Ctx) error {
 	err := data.DB().Model(&data.Url{}).Where("short_id = ?", urlParams).UpdateColumn("clicks", gorm.Expr("clicks + ?", 1)).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return c.Status(404).SendString("URL Not Found")
+			return c.Status(404).Render("404", data.AuthData(c))
 		}
 		return c.Status(500).SendString("Internal Server Error")
 	}
@@ -109,7 +109,7 @@ func SearchForStats(c *fiber.Ctx) error {
 func DeleteUrl(c *fiber.Ctx) error {
 	urlParams := c.Params("id")
 	if err := data.DB().Where("short_id = ?", urlParams).Delete(&data.Url{}).Error; err != nil {
-		return c.Status(500).SendString("Failed to delete URL.")
+		return c.Status(500).SendString("Failed to delete URL. Give that another go...")
 	}
 	return c.Redirect("/dashboard")
 }
