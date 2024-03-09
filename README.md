@@ -37,7 +37,8 @@ _A simple URL shortener implemented in Go using Fiber and MongoDB and a frontend
   - [x] I have to decide whether static and server-side with go or dynamic and client-side with JS
 - [ ] Stopping here to build it out for production.
 - [ ] Signed up user upgrades
-  - [ ] Custom short URLs
+  - [x] Custom short URLs
+    - [ ] Need to check this. Right now it's just whatever they type which could cause duplicates.
   - [ ] Custom referer data
     - [ ] Custom tags to categorize for analytics
   - [ ] Delete URLs
@@ -77,20 +78,17 @@ _A simple URL shortener implemented in Go using Fiber and MongoDB and a frontend
    go run main.go
    ```
 
-5. **Sending test GET/POST requests**
-   > This is currently not working, I plan on adding a api module to the project to handle this. Originally, that's all this was going to be.
+5. **Or Build the Application**
 
-**POST**
-
-- Set method to POST
-- URL - ` http://127.0.0.1:3000/api/new-url`
-- `{"long_url": "https://example.com"}`
-
-**GET**
-
-- Set method to GET
-- Set URL to `http://127.0.0.1:3000/stats/:id` with ':id' being the shortId of a corresponding document in your MongoDB
+   ```bash
+   go build -o ribbit .
+   ./ribbit
+   ```
 
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+```
+
+```

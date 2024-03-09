@@ -19,7 +19,12 @@ type Referer struct {
 	UrlID  uint `gorm:"column:url_id;foreignKey:url_id"`
 	Domain string
 	Clicks int
-	Tags   map[string]string `gorm:"-"`
+	Tags   map[string]Tag `gorm:"-"`
+}
+
+type Tag struct {
+	Name  string
+	Color string
 }
 
 type User struct {

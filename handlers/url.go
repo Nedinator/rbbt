@@ -84,7 +84,7 @@ func Redirect(c *fiber.Ctx) error {
 				referer.Clicks++
 				res.Referers[domain] = referer
 			} else {
-				newReferer := data.Referer{Domain: domain, Clicks: 1, Tags: make(map[string]string)}
+				newReferer := data.Referer{Domain: domain, Clicks: 1, Tags: make(map[string]data.Tag)}
 				res.Referers[domain] = newReferer
 			}
 			data.DB().Save(&res)
