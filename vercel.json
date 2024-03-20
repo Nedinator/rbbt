@@ -1,5 +1,8 @@
 {
   "trailingSlash":false,
+  "builds": [
+    { "src": "go mod tidy", "use": "@vercel/go" }
+  ],
   "rewrites":
   [
     {
