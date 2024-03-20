@@ -1,5 +1,10 @@
 {
     "github": {
       "silent": true
-    }
+    },
+  "version": 2,
+  "builds": [
+    { "src": "vercel.json", "use": "@vercel/static" },
+    { "src": "go mod tidy", "use": "@vercel/go" }
+  ]
   }
