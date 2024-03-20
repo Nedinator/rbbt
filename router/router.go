@@ -8,11 +8,13 @@ import (
 	"github.com/Nedinator/ribbit/handlers"
 	"github.com/Nedinator/ribbit/middleware"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"gorm.io/gorm"
 )
 
 func SetupRoutes(app *fiber.App) {
 	app.Use(middleware.AuthStatusMiddleware)
+	app.Use(logger.New())
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Render("home", data.AuthData(c))
 	})
