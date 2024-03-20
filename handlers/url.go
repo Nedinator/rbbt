@@ -16,7 +16,7 @@ func GetUrlStats(c *fiber.Ctx) error {
 	urlParams := c.Params("id")
 	var res data.Url
 	if err := data.DB().Where("short_id = ?", urlParams).First(&res).Error; err != nil {
-		return c.Status(404).Render("404", nil)
+		return c.Status(404).Render("404", data.AuthData(c))
 	}
 	statsData := data.AuthData(c)
 	statsData["url"] = res
@@ -98,7 +98,7 @@ func SearchForStats(c *fiber.Ctx) error {
 	searchID := c.Query("searchid")
 	var res data.Url
 	if err := data.DB().Where("short_id = ?", searchID).First(&res).Error; err != nil {
-		return c.Status(404).Render("404", nil)
+		return c.Status(404).Render("404", data.AuthData(c))
 	}
 	timzoneCookie := c.Cookies("timezone", "UTC")
 	loc, err := time.LoadLocation(timzoneCookie)
