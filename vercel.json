@@ -2,6 +2,11 @@
     "version": 2,
     "builds": [
       { "src": "/*", "use": "@vercel/go" }
-    ]
+    ],
+    "functions": {
+        "api/*": {
+          "runtime": "go1.21.6"
+        }
+      }
   }
   
