@@ -71,7 +71,7 @@ _A simple URL shortener implemented in Go using Fiber and MongoDB and a frontend
 4. **Run the Application:**
 
    ```bash
-   go run main.go
+    air
    ```
 
 5. **Or Build the Application**
