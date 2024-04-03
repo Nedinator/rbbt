@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/Nedinator/ribbit/data"
@@ -24,8 +25,9 @@ func GetUrlStats(c *fiber.Ctx) error {
 }
 
 func CreateURL(c *fiber.Ctx) error {
+	correctedURL := strings.ReplaceAll(c.FormValue("longurl"), " ", "_")
 	newurl := data.Url{
-		LongUrl: c.FormValue("longurl"),
+		LongUrl: correctedURL,
 		Owner:   c.Locals("Username").(string),
 		ShortId: c.FormValue("shortid"),
 		Clicks:  0,

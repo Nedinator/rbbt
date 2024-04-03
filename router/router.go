@@ -23,7 +23,7 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/auth/login", handlers.Login)
 	app.Post("/auth/logout", handlers.Logout)
 	app.Get("/stats/:id", handlers.GetUrlStats)
-	app.Delete("/delete/:id", middleware.JwtMiddleware, handlers.DeleteUrl)
+	app.Get("/delete/:id", middleware.JwtMiddleware, handlers.DeleteUrl)
 	app.Get("/login", func(c *fiber.Ctx) error {
 		return c.Render("login", data.AuthData(c))
 	})
